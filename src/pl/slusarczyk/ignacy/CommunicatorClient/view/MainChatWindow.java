@@ -19,36 +19,34 @@ import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.NewMessage;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
-/**Klasa odpowiedzialna za wy힄wietlanie g흢처wnego okna chatu**/
+/** 기본 채팅 창을 표시하는 클래스 **/
 
-class MainChatWindow 
-{
-	/**G흢처wna ramka*/
+class MainChatWindow {
+	/** 메인 프레임 */
 	private JFrame frame;
-	/**Obszar gdzie wy힄wietlana jest rozmowa pomiedzy u탉ytkownikami */
+	/** 사용자 간의 대화가 표시되는 영역 */
 	private JTextArea usersConversation;
-	/**Obszar gdzie u탉ytkownik wpisuje swoj훳 wiadomo힄훶 */
+	/** 사용자가 메시지를 입력하는 영역 */
 	private JTextArea userTextfield;
-	/**Obszar gdzie wy힄wietlani s훳 obecni u탉ytkownicy chatu*/
+	/** 채팅 사용자가있는 지역 */
 	private JTextArea onlineUsers;
-	/**Przycisk sygnalizuj훳cy wys흢anie wiadomo힄ci*/
+	/** 메시지 전송 버튼 */
 	private JButton sendButton;
-	/**Etykieta wskazuj훳ca miejsce wy힄wietlania listy u탉ytkownik처w*/
+	/** 사용자가 목록을 표시하는 위치를 나타내는 레이블 */
 	private JLabel lblUsersInRoom;
-	/**Scrollery poszczeg처lnych obszar처w tekstowych*/
+	/** 텍스트의 개별 영역 스크롤러 */
 	private JScrollPane userConversationScroll;
 	private JScrollPane userTextMessageScroll;
 	private JScrollPane onlineUsersScroll;
-	/**Kolejka blokujaca do ktorej sa dodawane nowe eventy*/
+	/** 새 이벤트가 추가 된 블로킹 큐 */
 	private final BlockingQueue<ServerHandledEvent> eventQueue;
-	/**Opakowana nazwa u탉ytkownika za pomoc훳, kt처rej serwer identyfikuje jego eventy*/
+	/** 서버가 자신의 이벤트를 식별하는 데 도움을 준 사용자의 래핑 된 이름 */
 	private final UserIdData userIdData;
-	/**Nazwa pokoju, w kt처rym u탉ytkownika si휌혻znajduje*/
+	/** 사용자가있는 방의 이름 */
 	private final String roomName;
-	
-	/**Konstruktro inicjulizuj훳cy i wy힄wietlaj훳cy ramk휌*/
-	public MainChatWindow( final BlockingQueue<ServerHandledEvent> eventQueue, final UserIdData userIdData, final String roomName)
-	{	
+
+	/** 프레임 시작 및 표시 */
+	public MainChatWindow(final BlockingQueue<ServerHandledEvent> eventQueue, final UserIdData userIdData, final String roomName) {
 		this.userIdData = userIdData;
 		this.roomName = roomName;
 		this.eventQueue = eventQueue;
@@ -57,47 +55,43 @@ class MainChatWindow
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * 프레임 내용을 초기화
 	 */
-	private void initialize() 
-	{
-		/**Inicjalizowanie g흢처wnej ramki*/
+	private void initialize() {
+		/** 메인 프레임 초기화 */
 		frame = new JFrame("ChatRoom");
 		frame.setBounds(100, 100, 450, 320);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		/**Przeci훳탉am klikni휌cie zamkni휌cia okna chatu*/
-		WindowAdapter exitListener = new WindowAdapter() 
-		{
-		    @Override
-		    public void windowClosing(WindowEvent e) 
-		    {
-		        	eventQueue.offer(new ClientLeftRoom(userIdData, roomName));
-		           System.exit(0);
-		    }
+
+		/** 채팅 창을 클릭 */
+		WindowAdapter exitListener = new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				eventQueue.offer(new ClientLeftRoom(userIdData, roomName));
+				System.exit(0);
+			}
 		};
 		frame.addWindowListener(exitListener);
-		
-		
-		/**Inicjalizowanie obszaru rozmowy u탉ytkownik처w wraz ze scrollerem*/
+
+		/** 스크롤러와 함께 사용자 영역을 사용하여 대화 영역을 초기화 */
 		usersConversation = new JTextArea();
 		usersConversation.setBounds(12, 12, 260, 189);
 		usersConversation.setEditable(false);
 		userConversationScroll = new JScrollPane(usersConversation);
 		userConversationScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		userConversationScroll.setBounds(12, 12, 260, 189);
-		frame.getContentPane().add(userConversationScroll);	
-		
-		/**Inicjalizowanie obszaru, w kt처rym u탉ytkownik wpisuje swoj훳 wiadomo힄훶 wraz ze scrollerem*/
+		frame.getContentPane().add(userConversationScroll);
+
+		/** 사용자가 스크롤러로 메시지를 입력하는 영역 초기화 */
 		userTextfield = new JTextArea();
 		userTextfield.setBounds(12, 213, 260, 56);
 		userTextMessageScroll = new JScrollPane(userTextfield);
 		userTextMessageScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		userTextMessageScroll.setBounds(12, 213, 260, 56);
-		frame.getContentPane().add(userTextMessageScroll);	
-		
-		/**Inicjalizowanie obszaru, w kt처rym wy힄wietlana jest lista uzytkownik처w wraz ze scrollerem*/
+		frame.getContentPane().add(userTextMessageScroll);
+
+		/** 사용자 목록을 스크롤러와 함께 표시하는 영역 초기화 */
 		onlineUsers = new JTextArea();
 		onlineUsers.setBounds(284, 34, 154, 184);
 		onlineUsers.setEditable(false);
@@ -105,54 +99,48 @@ class MainChatWindow
 		onlineUsersScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		onlineUsersScroll.setBounds(284, 34, 154, 184);
 		frame.getContentPane().add(onlineUsersScroll);
-		
-		/**Inicjalizowanie przycisku wy힄lij*/
+
+		/** 버튼 초기화 */
 		sendButton = new JButton("Send message");
 		sendButton.setBounds(288, 224, 117, 25);
-		sendButton.addActionListener(new ActionListener() 
-		{
+		sendButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				eventQueue.offer(new NewMessage(roomName,userIdData,userTextfield.getText()));
+			public void actionPerformed(ActionEvent e) {
+				eventQueue.offer(new NewMessage(roomName, userIdData, userTextfield.getText()));
 				userTextfield.setText("");
 			}
 		});
-		
+
 		frame.getContentPane().add(sendButton);
-		
-		/**Inicjalizowanie etykiety wkazuj훳cej list휌 obecnych u탉ytkownik처w*/
+
+		/** 메시지의 레이블 초기화 */
 		lblUsersInRoom = new JLabel("Users in room");
 		lblUsersInRoom.setBounds(300, 4, 126, 30);
 		frame.getContentPane().add(lblUsersInRoom);
 	}
 
 	/**
-	 * Metoda uaktualniaj훳ca okno, w kt처rym wy힄wietlana jest rozmowa u탉ytkownik처w
+	 * 사용자의 대화가 표시되는 창을 업데이트하는 메서드
 	 * 
 	 * @param usersConversationText
 	 */
-	public void updateUsersConversation(final String usersConversationText)
-	{
+	public void updateUsersConversation(final String usersConversationText) {
 		SwingUtilities.invokeLater(new Runnable() {
-			public void run()
-			{
+			public void run() {
 				usersConversation.setText("");
 				usersConversation.append(usersConversationText);
 			}
 		});
 	}
-	
+
 	/**
-	 * Metoda uaktualniaj훳ca wy힄wietlan훳 list휌 aktywnych u탉ytkownik처w
+	 * 활성 사용자의 표시된 목록을 업데이트하는 메소드
 	 * 
 	 * @param userList
 	 */
-	public void updateUsersList(final String userList)
-	{
+	public void updateUsersList(final String userList) {
 		SwingUtilities.invokeLater(new Runnable() {
-			public void run()
-			{
+			public void run() {
 				onlineUsers.setText("");
 				onlineUsers.append(userList);
 			}

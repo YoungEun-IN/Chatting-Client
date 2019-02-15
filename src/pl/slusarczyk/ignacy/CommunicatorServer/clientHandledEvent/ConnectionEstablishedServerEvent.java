@@ -36,7 +36,7 @@ public class ConnectionEstablishedServerEvent extends ClientHandledEvent impleme
 	 * 
 	 * @return isEstablished
 	 */
-	public boolean getConnectionInfrmation()
+	public boolean isEstablished()
 	{
 		return this.isEstablished;
 	}

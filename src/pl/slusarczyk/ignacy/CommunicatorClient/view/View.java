@@ -17,228 +17,198 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.MessageData;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserData;
 
 /**
- * G흢처wna klasa widoku odpowiedzialna za odpowiednie wy힄wietlanie okien i otrzymanych konwersacji
- * 
- * @author Ignacy 힃lusarczyk
+ * 창 표시 및 대화 수신을 담당
  */
-public class View 
-{
-	/**Okno wyboru do흢훳czenia lub stworzenia nowego pokoju*/
+public class View {
+	/** 새 룸 가입 또는 생성을위한 선택 창 */
 	private CreateJoinRoomWindow createJoinRoomView;
-	/**G흢처wne okno chatu*/
+	/** 기본 채팅 창 */
 	private MainChatWindow mainChatView;
-	/**Kolejka blokuj훳ca do kt처rej wrzucamy zdarzenia obs흢ugiwane przez kontroler*/
+	/** 컨트롤러가 처리 한 이벤트 이벤트를 던지는 블로킹 큐 */
 	private final BlockingQueue<ServerHandledEvent> eventQueue;
-	
+
 	private final Map<Class<? extends ClientHandledEvent>, ClientHandeledEventStrategy> strategyMap;
-	
+
 	/**
-	 * Konstruktor tworz훳cy widok na podstawie zadanego parametru
+	 * 지정된 파라미터에 근거하는 뷰를 작성하는 생성자
 	 * 
-	 * @param eventQueue kolejka blokuj훳ca
+	 * @param eventQueue
 	 */
-	public View(BlockingQueue<ServerHandledEvent> eventQueue)
-	{
+	public View(BlockingQueue<ServerHandledEvent> eventQueue) {
 		this.createJoinRoomView = new CreateJoinRoomWindow(eventQueue);
 		this.eventQueue = eventQueue;
-		
-		
-		/**Tworze map휌 strategii obs흢ugi makiet*/
+
+		/** 전략 맵 생성 및 할당 */
 		this.strategyMap = new HashMap<Class<? extends ClientHandledEvent>, ClientHandeledEventStrategy>();
 		this.strategyMap.put(ConnectionEstablishedServerEvent.class, new ConnectionEstablishedStrategy());
 		this.strategyMap.put(ConversationServerEvent.class, new ConversationServerEventStrategy());
 		this.strategyMap.put(InfoServerEvent.class, new MessageServerEventStrategy());
 	}
-	
-	/**Metoda odpowiedzialna za wykonanie strategii odpowiadaj훳cej dostarczonej makiety
-	 * 
-	 * @param clientHandeledEventObject obiekt wys흢any przez serwer
-	 */
-	public void executeClientHandeledEvent(ClientHandledEvent clientHandeledEventObject) 
-	{
-		ClientHandeledEventStrategy clientHandeledEventStrategy = strategyMap.get(clientHandeledEventObject.getClass());
-		clientHandeledEventStrategy.execute((ClientHandledEvent)clientHandeledEventObject);
-	}
-	
+
 	/**
-	 * Abstrakcyjna klasa bazowa dla klas strategii obs흢uguj훳cych zdarzenia.
+	 * 상응하는 모형의 전략을 구현하는 책임을 지는 메소드
 	 * 
-	 * @author Ignacy 힃lusarczyk
+	 * @param clientHandeledEventObject
 	 */
-	abstract class ClientHandeledEventStrategy 
-	{
+	public void executeClientHandeledEvent(ClientHandledEvent clientHandeledEventObject) {
+		ClientHandeledEventStrategy clientHandeledEventStrategy = strategyMap.get(clientHandeledEventObject.getClass());
+		clientHandeledEventStrategy.execute((ClientHandledEvent) clientHandeledEventObject);
+	}
+
+	/**
+	 * 이벤트를 처리하는 전략 클래스의 추상 기본 클래스
+	 */
+	abstract class ClientHandeledEventStrategy {
 		/**
-		 * Abstrakcyjna metoda opisuj훳ca obs흢ug휌 danego zdarzenia.
+		 * 주어진 이벤트의 서비스를 기술하는 추상 메소드.
 		 * 
-		 * @param ClientHandledEvent makieta od serwera, kt처ra musi zosta훶 poprawnie obs흢u탉ona
+		 * @param ClientHandledEvent
 		 */
 		abstract void execute(final ClientHandledEvent clientHandeledEventObject);
 	}
-	
+
 	/**
-	 * Klasa wewn휌trzna opisuj훳ca strategi휌 obs흢ugi przyj힄cia informacji od serwera, 탉e do흢훳czenie lub utworzenie pokoju zako흦czy흢o si휌 pomy힄lnie
-	 *
-	 * @author Ignacy 힃lusarczyk
+	 * 방의 연결 또는 생성이 성공적으로 완료된 서버의 정보를 처리하는 전략을 설명하는 내부 클래스
 	 */
-	class ConnectionEstablishedStrategy extends ClientHandeledEventStrategy
-	{
-		
+	class ConnectionEstablishedStrategy extends ClientHandeledEventStrategy {
+
 		@Override
-		void execute(ClientHandledEvent clientHandeledEventObject) 
-		{
+		void execute(ClientHandledEvent clientHandeledEventObject) {
 			ConnectionEstablishedServerEvent connectionEstablished = (ConnectionEstablishedServerEvent) clientHandeledEventObject;
-			mainChatView = new MainChatWindow(eventQueue,connectionEstablished.getUserIDData(), connectionEstablished.getRoomName());
+			mainChatView = new MainChatWindow(eventQueue, connectionEstablished.getUserIDData(), connectionEstablished.getRoomName());
 			createJoinRoomView.closeCreateRoomWindow();
 			createJoinRoomView = null;
 		}
 	}
-	
+
 	/**
-	 * Klasa wewn휌trzna opisuj훳ca strategi휌 obs흢ugi przyj힄cia rozmowy oraz listy u탉ytkownik처w
-	 *
-	 * @author Ignacy 힃lusarczyk
+	 * 대화 수락 및 사용자 목록 처리 방법을 설명하는 내부 클래스
 	 */
-	class ConversationServerEventStrategy extends ClientHandeledEventStrategy
-	{
+	class ConversationServerEventStrategy extends ClientHandeledEventStrategy {
 		@Override
-		void execute(ClientHandledEvent clientHandeledEventObject) 
-		{
+		void execute(ClientHandledEvent clientHandeledEventObject) {
 			ConversationServerEvent conversationObject = (ConversationServerEvent) clientHandeledEventObject;
 			updateUserConversationAndList(conversationObject);
 		}
 	}
-	
+
 	/**
-	 * Klasa wewn휌trzna opisuj훳ca strategi휌혻obs흢ugi przyj힄cia od serwera informacji do wy힄wietlenia 
+	 * 서버로부터 수신을 처리하여 표시 할 수있는 전략을 설명하는 내부 클래스
 	 * 
 	 * @author Ignacy 힃lusarczyk
 	 */
-	class MessageServerEventStrategy extends ClientHandeledEventStrategy
-	{
+	class MessageServerEventStrategy extends ClientHandeledEventStrategy {
 		@Override
-		void execute(ClientHandledEvent clientHandeledEventObject)
-		{
+		void execute(ClientHandledEvent clientHandeledEventObject) {
 			InfoServerEvent messageObject = (InfoServerEvent) clientHandeledEventObject;
 			createJoinRoomView.displayInfoMessage(messageObject);
 		}
 	}
-	
-	/****************************Metody widoku*********************88*/
-	
+
+	/**************************** 보기의 방법 **********************/
+
 	/**
-	 * Metoda uaktualniaj훳ca wy힄wietlan훳 rozmow휌 oraz aktywnych u탉ytkownik처w
+	 * 표시된 대화 및 활성 사용자를 업데이트하는 메소드
 	 * 
 	 * @param conversationServerEvent opakowane informacje do wy힄wietlenia
 	 */
-	public void updateUserConversationAndList(ConversationServerEvent conversationServerEvent)
-	{
+	public void updateUserConversationAndList(ConversationServerEvent conversationServerEvent) {
 		updateConversation(conversationServerEvent);
 		updateUserList(conversationServerEvent);
 	}
-	
+
 	/**
-	 * Metoda odpowiedzialna bezpo힄rednio na uaktualnienie wy힄wietlanej rozmowy
+	 * 표시된 호출을 직접 업데이트하는 메소드
 	 * 
-	 * @param conversationServerEvent opakowane informacje potrzebne do uaktualnieneia wy힄wietlanej rozmowy
+	 * @param conversationServerEvent
 	 */
-	public void updateConversation(ConversationServerEvent conversationServerEvent)
-	{
+	public void updateConversation(ConversationServerEvent conversationServerEvent) {
 		addUsersNicksToMessage(conversationServerEvent);
 		HashSet<MessageData> allMessages = gatherAllMessages(conversationServerEvent);
 		ArrayList<MessageData> sortedMessages = sortAllMessages(allMessages);
 		String conversationToDisplay = sortedMessagesToString(sortedMessages);
-		
+
 		mainChatView.updateUsersConversation(conversationToDisplay);
 	}
-	
+
 	/**
-	 * Metoda odpowiedzialna za dodanie nazwy u탉ytkownika do ka탉dej wiadomo힄ci w celu mo탉liwo힄ci ich identyfikacji po wy힄wietleniu
+	 * 표시 한 후에 메시지를 식별 할 수 있도록 각 메시지에 사용자의 이름을 추가하는 메소드
 	 * 
-	 * @param conversationInfo opakowane informacje
+	 * @param conversationInfo
 	 */
-	void addUsersNicksToMessage(ConversationServerEvent conversationInfo)
-	{
+	void addUsersNicksToMessage(ConversationServerEvent conversationInfo) {
 		HashSet<UserData> userDataSet = conversationInfo.getRoom().getUserSet();
-		
-		for(UserData userData : userDataSet)
-		{
-			for(MessageData messageData : userData.getUsersMessages())
-			{
-				messageData.setUserMessage(userData.getUserIdData().getUserName() +":"+ messageData.getMessage());
+
+		for (UserData userData : userDataSet) {
+			for (MessageData messageData : userData.getUsersMessages()) {
+				messageData.setUserMessage(userData.getUserIdData().getUserName() + ":" + messageData.getMessage());
 			}
 		}
 	}
-	
+
 	/**
-	 * Metoda zbieraj훳ca wszystkie wiadomo힄ci u탉ytkownik처w z danego pokoju
+	 * 방에있는 사용자의 모든 메시지를 모으는 메소드
 	 * 
-	 * @param conversationInfo opakowane informacje
-	 * @return zbi처r wszystkich wiadomo힄ci
+	 * @param conversationInfo
+	 * @return conversation
 	 */
-	HashSet<MessageData> gatherAllMessages (ConversationServerEvent conversationInfo)
-	{
+	HashSet<MessageData> gatherAllMessages(ConversationServerEvent conversationInfo) {
 		HashSet<MessageData> conversation = new HashSet<MessageData>();
-		
-		for(UserData userData: conversationInfo.getRoom().getUserSet())
-		{
+
+		for (UserData userData : conversationInfo.getRoom().getUserSet()) {
 			conversation.addAll(userData.getUsersMessages());
 		}
 		return conversation;
 	}
-	
+
 	/**
-	 * Metoda sortuj훳ca wszystkie wiadomo힄ci u탉ytkownik처w wg daty ich powstania
+	 * 사용자가 만든 날짜의 모든 메시지를 정렬하는 메소드
 	 * 
-	 * @param usersMessages zbior wiadomo힄ci u탉ytkownik처w
-	 * @return
+	 * @param usersMessages
+	 * 
+	 * @return sortedMessages
 	 */
-	ArrayList<MessageData> sortAllMessages(HashSet<MessageData> usersMessages)
-	{
+	ArrayList<MessageData> sortAllMessages(HashSet<MessageData> usersMessages) {
 		ArrayList<MessageData> sortedMessages = new ArrayList<MessageData>();
 		sortedMessages.addAll(usersMessages);
 		Collections.sort(sortedMessages);
 		return sortedMessages;
 	}
-	
+
 	/**
-	 * Metoda zamieniaj훳ca posortowany zbi처r wiadomo힄ci w string gotowy do wy힄wietlenia w oknie chatu
+	 * 정렬 된 메시지 집합을 채팅 창에 표시 할 준비가 된 문자열로 변환하는 메소드
 	 * 
-	 * @param sortedMessages lista wiadomo힄ci
-	 * @return
+	 * @param sortedMessages
+	 * 
+	 * @return conversationToDisplay
 	 */
-	String sortedMessagesToString(ArrayList<MessageData> sortedMessages)
-	{
+	String sortedMessagesToString(ArrayList<MessageData> sortedMessages) {
 		String conversationToDisplay = new String("");
-		for(MessageData messageData : sortedMessages)
-		{
+		for (MessageData messageData : sortedMessages) {
 			conversationToDisplay = conversationToDisplay + messageData.getMessage() + "\n";
 		}
 		return conversationToDisplay;
 	}
-	
+
 	/**
-	 * Metoda uaktualniaj훳ca list휌 u탉ytkownik처w chatu
+	 * 채팅에서 사용자 목록을 업데이트하는 메소드
 	 * 
-	 * @param conversationServerEvent opakowane dane
+	 * @param conversationServerEvent
 	 */
-	void updateUserList(ConversationServerEvent conversationServerEvent)
-	{
+	void updateUserList(ConversationServerEvent conversationServerEvent) {
 		String usersListToDisplay = new String("");
-		
+
 		List<String> userListToSort = new ArrayList<String>();
-		
-		/**Przechodzimy po wszystkich u탉ytkownikach i sprawdzamy czy dany u탉ytkownik jest aktywny, je힄li jest to dodajemymy go do listy*/
-		for(UserData userData: conversationServerEvent.getRoom().getUserSet())
-		{
-			if(userData.isActive() == true)
-			{
+
+		/** 모든 사용자를 거쳐 목록에 추가 된 사용자가 활성 상태인지 확인 */
+		for (UserData userData : conversationServerEvent.getRoom().getUserSet()) {
+			if (userData.isActive() == true) {
 				userListToSort.add(userData.getUserIdData().getUserName());
 			}
 		}
-		
+
 		Collections.sort(userListToSort);
-		for (String imie:userListToSort)
-		{
+		for (String imie : userListToSort) {
 			usersListToDisplay = usersListToDisplay + imie + "\n";
 		}
 		mainChatView.updateUsersList(usersListToDisplay);
