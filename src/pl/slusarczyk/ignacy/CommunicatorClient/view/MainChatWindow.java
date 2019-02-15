@@ -14,8 +14,8 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ClientLeftRoom;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.NewMessage;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ClientLeftRoomEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.SendMessageEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
@@ -68,7 +68,7 @@ class MainChatWindow {
 		WindowAdapter exitListener = new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				eventQueue.offer(new ClientLeftRoom(userIdData, roomName));
+				eventQueue.offer(new ClientLeftRoomEvent(userIdData, roomName));
 				System.exit(0);
 			}
 		};
@@ -106,7 +106,7 @@ class MainChatWindow {
 		sendButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventQueue.offer(new NewMessage(roomName, userIdData, userTextfield.getText()));
+				eventQueue.offer(new SendMessageEvent(roomName, userIdData, userTextfield.getText()));
 				userTextfield.setText("");
 			}
 		});

@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.CreateNewRoom;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.JoinExistingRoom;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.CreateNewRoomEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.JoinExistingRoomEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.InfoServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
@@ -56,7 +56,7 @@ class CreateJoinRoomWindow {
 		submitButtonAndJoinRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventQueue.offer(new CreateNewRoom(roomNameField.getText(), new UserIdData(userNameField.getText())));
+				eventQueue.offer(new CreateNewRoomEvent(roomNameField.getText(), new UserIdData(userNameField.getText())));
 			}
 		});
 
@@ -65,7 +65,7 @@ class CreateJoinRoomWindow {
 		submitButtonAndCreateRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventQueue.offer(new JoinExistingRoom(roomNameField.getText(), new UserIdData(userNameField.getText())));
+				eventQueue.offer(new JoinExistingRoomEvent(roomNameField.getText(), new UserIdData(userNameField.getText())));
 			}
 		});
 

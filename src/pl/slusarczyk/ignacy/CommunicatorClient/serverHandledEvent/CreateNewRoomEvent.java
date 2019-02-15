@@ -1,51 +1,44 @@
 package pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent;
 
 import java.io.Serializable;
-
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
- * 사용자가 방에 연결하기 위해 버튼을 누르는 이벤트를 설명하는 클래스
+ * 유저가 새로운 방을 작성하기 위해서 버튼을 누르는 이벤트를 나타내는 클래스
  */
-public class JoinExistingRoom extends ServerHandledEvent implements Serializable
-{
+public class CreateNewRoomEvent extends ServerHandledEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
-	/**roomName*/
+	/** 방의 이름 */
 	private final String roomName;
-	/**userIDData*/
+	/** userIDData */
 	private final UserIdData userIDData;
 
 	/**
 	 * 지정된 매개 변수를 기반으로 이벤트를 만드는 생성자
 	 * 
-	 * @param roomName 
-	 * @param userId ID
+	 * @param roomName
+	 * @param userID
 	 */
-	public JoinExistingRoom (final String roomName,final UserIdData userIdData)
-	{
+	public CreateNewRoomEvent(final String roomName, final UserIdData userIDData) {
 		this.roomName = roomName;
-		this.userIDData = userIdData;
+		this.userIDData = userIDData;
 	}
-		
+
 	/**
 	 * 방 이름을 반환
 	 * 
 	 * @return roomName
 	 */
-	public String getRoomName()
-	{
+	public String getRoomName() {
 		return roomName;
 	}
 
 	/**
-	 * 사용자의 패키지 이름을 반환
+	 * 사용자의 ID를 반환
 	 * 
 	 * @return userIDData
 	 */
-	public UserIdData getUserIdData()
-	{
+	public UserIdData getUserIdData() {
 		return userIDData;
 	}
 }
-
-
