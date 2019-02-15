@@ -5,24 +5,24 @@ import java.io.Serializable;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
- * Klasa reprezentuj훳ca zaakceptowanie przez serwer nowego po흢훳czenia, sygnalizuj훳ca mo탉liwo힄훶 otworzenia g흢처wnego okna chatu w aplikacji klienckiej
- * 
- * @author Ignacy 힃lusarczyk
+ * 새로운 연결의 서버에 의한 수용을 나타내는 클래스로서, 클라이언트 응용 프로그램에서 기본 대화창을 열 가능성을 알립니다.
  */
 public class ConnectionEstablishedServerEvent extends ClientHandledEvent implements Serializable
 {
 	 private static final long serialVersionUID = 1L;
-	/**Invormacja o nawi훳zaniu po흢훳czenia*/
+	/**연결 설정에 대한 표시*/
 	 private  final boolean isEstablished;
-	 /**Opakowana nazwa u탉ytkownika*/
+	 /**감싸인 사용자 이름*/
 	 private final UserIdData userIDData;
-	 /**Nazwa pokoju do kt처rego zosta흢 do흢훳czony*/
+	 /**가입한 방의 이름*/
 	 private final String roomName;
 	 
 	/**
-	 * Konstruktor tworz훳cy zdarzenie na podstawie zadanych parametr처w
+	 * 지정된 매개 변수를 기반으로 이벤트를 만드는 생성자
 	 * 
-	 * @param isEstablished czy po흢훳czenie przyj휌te
+	 * @param isEstablished 연결이 수락되었는지 여부
+	 * @param userIdData
+	 * @param roomName
 	 */
 	public ConnectionEstablishedServerEvent(final boolean isEstablished, final UserIdData userIdData, final String roomName)
 	{
@@ -32,9 +32,9 @@ public class ConnectionEstablishedServerEvent extends ClientHandledEvent impleme
 	}
 	
 	/**
-	 * Metoda zwracaj훳ca informacj휌 o zaakceptowaniu po흢훳czenia
+	 * 연결 수락에 대한 정보를 반환하는 메서드
 	 * 
-	 * @return
+	 * @return isEstablished
 	 */
 	public boolean getConnectionInfrmation()
 	{
@@ -42,9 +42,9 @@ public class ConnectionEstablishedServerEvent extends ClientHandledEvent impleme
 	}
 	
 	/**
-	 * Metoda zwracaj훳ca userId
+	 * userIDData를 반환
 	 * 
-	 * @return
+	 * @return userIDData
 	 */
 	public UserIdData getUserIDData()
 	{
@@ -52,9 +52,9 @@ public class ConnectionEstablishedServerEvent extends ClientHandledEvent impleme
 	}
 	
 	/**
-	 * Metoda zwracaj훳ca nazw휌 pokoju
+	 * 방 이름을 반환
 	 * 
-	 * @return
+	 * @return roomName
 	 */
 	public String getRoomName()
 	{

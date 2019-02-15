@@ -5,23 +5,21 @@ import java.io.Serializable;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
- * Klasa opisuj훳ca zdarzenie naci힄ni휌cia przez u탉ytkownika przycisku do흢훳czenia do pokoju
- * 
- * @author Ignacy 힃lusarczyk
+ * 사용자가 방에 연결하기 위해 버튼을 누르는 이벤트를 설명하는 클래스
  */
 public class JoinExistingRoom extends ServerHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	/**Nazwa pokoju*/
+	/**roomName*/
 	private final String roomName;
-	/**Opakowana nazwa u탉ytkownika*/
+	/**userIDData*/
 	private final UserIdData userIDData;
 
 	/**
-	 * Konstruktor tworz훳cy zdarzenie na podstawie zadanych parametr처w
+	 * 지정된 매개 변수를 기반으로 이벤트를 만드는 생성자
 	 * 
-	 * @param roomName nazwa pokoju
-	 * @param userId ID u탉ytkownika 
+	 * @param roomName 
+	 * @param userId ID
 	 */
 	public JoinExistingRoom (final String roomName,final UserIdData userIdData)
 	{
@@ -30,9 +28,9 @@ public class JoinExistingRoom extends ServerHandledEvent implements Serializable
 	}
 		
 	/**
-	 * Metoda zwracaj훳ca nazw휌 pokoju
+	 * 방 이름을 반환
 	 * 
-	 * @return nazwa pokoju
+	 * @return roomName
 	 */
 	public String getRoomName()
 	{
@@ -40,9 +38,9 @@ public class JoinExistingRoom extends ServerHandledEvent implements Serializable
 	}
 
 	/**
-	 * Metoda zwracaj훳ca opakowan훳 nazw휌 u탉ytkownika
+	 * 사용자의 패키지 이름을 반환
 	 * 
-	 * @return nazwa u탉ytkownika
+	 * @return userIDData
 	 */
 	public UserIdData getUserIdData()
 	{

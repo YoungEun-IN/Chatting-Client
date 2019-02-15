@@ -5,16 +5,14 @@ import java.io.Serializable;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
- * Klasa s흢u탉훳ca do wysy흢ania informacji do wy힄wietlenia u u탉ytkownika np do informowania, i탉 dany nick jest ju탉혻zaj휌ty.
- * 
- * @author Ignacy 힃lusarczyk
+ * 이 클래스는 사용자에게 정보를 보내는 데 사용됩니다.
  */
 public class MessageServerEvent extends ClientHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	/**Wiadomo힄훶, kt처ra ma zosta훶 wy힄wietlona u u탉ytkownika*/
+	/**사용자에게 표시 될 메시지*/
 	private final String message;
-	/**Opakowana nazwa u탉ytkownika, u kt처rego dana wiadomo힄훶 ma zosta훶 wy힄wietlona*/
+	/**메시지가 표시 될 사용자의 사전 패키지 이름이 표시되어야합니다.*/
 	private final UserIdData userIDData;
 	
 	public MessageServerEvent(final String message, final UserIdData userIDData)
@@ -24,7 +22,7 @@ public class MessageServerEvent extends ClientHandledEvent implements Serializab
 	}
 
 	/**
-	 * Metoda zwracaj훳ca tre힄훶 wiadomo힄ci
+	 * 메시지 내용을 반환
 	 * 
 	 * @return the message
 	 */
@@ -34,7 +32,7 @@ public class MessageServerEvent extends ClientHandledEvent implements Serializab
 	}
 
 	/**
-	 * Metoda zwracaj훳ca userId nadawcy
+	 * 보낸 사람의 userId를 반환
 	 * 
 	 * @return the userID
 	 */

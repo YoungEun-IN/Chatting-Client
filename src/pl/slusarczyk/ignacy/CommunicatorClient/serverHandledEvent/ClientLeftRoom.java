@@ -3,23 +3,21 @@ import java.io.Serializable;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
- * Klasa opisuj훳ca zdarzenie naci힄ni휌cia przez u탉ytkownika przycisku wyj힄cia z chatu w oknie rozmowy.
- * 
- * @author Ignacy 힃lusarczyk
+ * 채팅 종료 버튼을 누른 사용자의 이벤트를 설명하는 클래스입니다.
  */
 public class ClientLeftRoom extends ServerHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	/**Nazwa u탉ytkownika, kt처ry wyszed흢 z chatu*/
+	/**채팅을 떠난 사용자의 이름*/
 	private final UserIdData userIdData;
-	/**Nazwa pokoju, w kt처rym u탉ytkownik si휌 znajdowa흢*/
+	/**사용자를 찾을 방의 이름*/
 	private final String roomName;
 	
 	/**
-	 * Konstruktor tworz훳cy zdarzenie na podstawie podanych parametr처w
+	 * 주어진 매개 변수를 기반으로 이벤트를 만드는 생성자
 	 * 
-	 * @param userName nazwa u탉ytkownika
-	 * @param roomName nazwa pokoju
+	 * @param userName 
+	 * @param roomName
 	 */
 	public ClientLeftRoom(final UserIdData userIDData,final String roomName)
 	{
@@ -28,9 +26,9 @@ public class ClientLeftRoom extends ServerHandledEvent implements Serializable
 	}
 	
 	/**
-	 * Metoda zwracaj훳ca nazw휌 u탉ytkownika
+	 * 사용자의 이름을 반환
 	 *
-	 * @return nazwa u탉ytkownika
+	 * @return userIdData
 	 */
 	public UserIdData getUserIDData() 
 	{
@@ -38,9 +36,9 @@ public class ClientLeftRoom extends ServerHandledEvent implements Serializable
 	}
 
 	/**
-	 * Metoda zwracaj훳ca nazw휌 pokoju
+	 * 방 이름을 반환
 	 * 
-	 * @return nazwa pokoju
+	 * @return roomName
 	 */
 	public String getRoomName() 
 	{

@@ -4,49 +4,41 @@ import java.io.Serializable;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
- * Klasa reprezentuj훳ca zdarzenie naci힄ni휌cia przez u탉ytkownika przycisku utworzenia nowego pokoju
- * 
- * @author Ignacy 힃lusarczyk
+ * 유저가 새로운 방을 작성하기 위해서 버튼을 누르는 이벤트를 나타내는 클래스
  */
-public class CreateNewRoom extends ServerHandledEvent implements Serializable
-{
+public class CreateNewRoom extends ServerHandledEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
-	/**Nazwa pokoju*/
+	/** 방의 이름 */
 	private final String roomName;
-	/**Opakowana nazwa u탉ytkownika*/
+	/** userIDData */
 	private final UserIdData userIDData;
 
 	/**
-	 * Konstruktor tworz훳cy zdarzenie na podstawie zadanych parametr처w
+	 * 지정된 매개 변수를 기반으로 이벤트를 만드는 생성자
 	 * 
-	 * @param roomName nazwa pokoju
-	 * @param userID ID u탉ytkownika
+	 * @param roomName
+	 * @param userID
 	 */
-	public CreateNewRoom(final String roomName,final UserIdData userIDData)
-	{
+	public CreateNewRoom(final String roomName, final UserIdData userIDData) {
 		this.roomName = roomName;
 		this.userIDData = userIDData;
 	}
-	
+
 	/**
-	 * Metoda zwracaj훳ca nazw휌 pokoju
+	 * 방 이름을 반환
 	 * 
-	 * @return nazwa pokoju
+	 * @return roomName
 	 */
-	public String getRoomName()
-	{
+	public String getRoomName() {
 		return roomName;
 	}
 
 	/**
-	 * Metoda zwracaj훳ca ID u탉ytkownika
+	 * 사용자의 ID를 반환
 	 * 
-	 * @return nazwa u탉ytkownika
+	 * @return userIDData
 	 */
-	public UserIdData getUserIdData()
-	{
+	public UserIdData getUserIdData() {
 		return userIDData;
 	}
 }
-
-

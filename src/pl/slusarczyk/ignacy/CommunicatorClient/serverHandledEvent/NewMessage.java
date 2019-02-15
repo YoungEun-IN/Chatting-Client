@@ -4,26 +4,24 @@ import java.io.Serializable;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
- * Klasa opisuj훳ca zdarzenie naci힄ni휌cia przez u탉ytkownika przycisku wys흢ania wiadomo힄ci
- * 
- * @author Ignacy 힃흢usarczyk
+ * 유저가 메세지를 송신하기 위해서 버튼을 누르는 이벤트를 기술하는 클래스
  */
 public class NewMessage extends ServerHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	/**Nazwa pokoju*/
+	/**방의 이름*/
 	private final String roomName;
-	/**Opakowana nazwa u탉ytkownika*/
+	/**감싸인 사용자 이름*/
 	private final UserIdData userIDData;
-	/**Wiadomo힄훶, kt처r훳 u탉ytkownik chce wys흢a훶*/
+	/**사용자가 보내려는 메시지*/
 	private final String message;
 	
 	/**
-	 * Konstruktor tworz훳cy zdarzenie na podstawie podancych parametr처w
+	 * 주어진 매개 변수를 기반으로 이벤트를 만드는 생성자
 	 * 
-	 * @param roomName nazwa pokoju
-	 * @param userID ID u탉ytkownika
-	 * @param message wiadomo힄훶
+	 * @param roomName
+	 * @param userID 
+	 * @param message
 	 */
 	public NewMessage (final String roomName,final UserIdData userIdData,final String message)
 	{
@@ -33,9 +31,9 @@ public class NewMessage extends ServerHandledEvent implements Serializable
 	}
 	
 	/**
-	 * Metoda zwracaj훳ca nazw휌 pokoju, w kt처rym dany u탉ytkownik si휌 znajduje 
+	 * 지정된 사용자가있는 방의 이름을 반환 
 	 * 
-	 * @return nazwa pkokju
+	 * @return roomName
 	 */
 	public String getRoomName()
 	{
@@ -43,9 +41,9 @@ public class NewMessage extends ServerHandledEvent implements Serializable
 	}
 	
 	/**
-	 * Metoda zwracaj훳ca ID u탉ytkownika, kt처ry wys흢a흢 wiadomo힄훶
+	 * 메시지를 보낸 사용자의 ID를 반환
 	 * 
-	 * @return nazwa u탉ytkownika
+	 * @return userIDData
 	 */
 	public UserIdData getUserIdData ()
 	{
@@ -53,9 +51,9 @@ public class NewMessage extends ServerHandledEvent implements Serializable
 	}
 	
 	/**
-	 * Metoda zwracaj훳ca wiadomo힄훶, kt처r훳 u탉ytkownik wys흢a흢
+	 * 사용자가 보낸 메시지를 반환
 	 * 
-	 * @return wiadomo힄훶
+	 * @return message
 	 */
 	public String getMessage ()
 	{

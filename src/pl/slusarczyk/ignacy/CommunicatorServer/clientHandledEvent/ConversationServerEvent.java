@@ -5,36 +5,29 @@ import java.io.Serializable;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.RoomData;
 
 /**
- * Klasa reprezentuj훳ca otrzymanie wiadomo힄ci na serwerze i konieczno힄훶 uaktualnienia rozmowy w oknie klienta, wysy흢a 
- * opakowane dane o pokoju, w kt처rym zosta흢a dodana nowa wiadomo힄훶
- * 
- * @author Ignacy 힃lusarczyk
+ * 서버의 메시지 수신을 나타내는 클래스와 클라이언트 윈도우에서 대화를 업데이트해야하는 필요성, 새 메시지가 추가 된 방에 대한 압축 된 데이터를 보냅니다.
  */
-public class ConversationServerEvent extends ClientHandledEvent implements Serializable
-{
+public class ConversationServerEvent extends ClientHandledEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
-	/**Opakowane informacje o pokoju*/
+	/** 방에 대한 감싸인 정보 */
 	private final RoomData roomData;
-	
+
 	/**
-	 * Konstruktor tworz훳cy zdarzenie na podstawie zadanych parametr처w
+	 * 지정된 매개 변수를 기반으로 이벤트를 만드는 생성자
 	 * 
-	 * @param userConversation rozmowa u탉ytkownik처w do wy힄wietlenia
-	 * @param listOfUsers lista u탉ytkownik처w do wy힄wietlenia
+	 * @param userConversation 사용자 간의 대화
+	 * @param listOfUsers      현재 채팅중인 사용자 목록
 	 */
-	public ConversationServerEvent (final RoomData room)
-	{
+	public ConversationServerEvent(final RoomData room) {
 		this.roomData = room;
 	}
 
 	/**
-	 * Metoda zwracaj훳ca opakowane dane o pokoju
+	 * 방에 대한 패키지 데이터를 반환
 	 * 
-	 * @return rozmowa u탉ytkownik처w
+	 * @return roomData
 	 */
-	public RoomData getRoom() 
-	{
+	public RoomData getRoom() {
 		return roomData;
 	}
 }
-

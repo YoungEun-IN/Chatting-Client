@@ -1,9 +1,7 @@
 package pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent;
 
 /**
- * Abstrakcyjna klasa bazowa dla wszystkich zdarze흦 ob흢ugiwanych przez klienta, pochodz훳cych zar처wno od serwera jak i widoku klienta.
- * 
- * @author Ignacy 힃lusarczyk
+ * 모든 고객 관련 이벤트에 대한 추상 기본 클래스
  */
 public abstract class  ClientHandledEvent
 {
