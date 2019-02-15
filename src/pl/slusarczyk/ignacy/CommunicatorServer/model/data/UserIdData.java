@@ -2,36 +2,29 @@ package pl.slusarczyk.ignacy.CommunicatorServer.model.data;
 
 import java.io.Serializable;
 
-
 /**
- * Klasa opakowuj훳ca nazw휌 u탉ytkownika, wysy흢ana do klienta
- * 
- * @author Ignacy 힃lusarczyk
+ * 고객에게 보낸 사용자 이름을 래핑하는 클래스
  */
-public class UserIdData implements Serializable
-{
+public class UserIdData implements Serializable {
 	private static final long serialVersionUID = 1L;
-	/**Nazwa u탉ytkownika*/
+	/** userNameToDisplay */
 	private final String userNameToDisplay;
-	
+
 	/**
-	 * Konstruktor tworz훳cy obiekt na podstawie zadanego parametru
+	 * 지정된 파라미터에 근거 해 오브젝트를 생성하는 생성자
 	 * 
-	 * @param userName Nazwa u탉ytownika
+	 * @param userName
 	 */
-	public UserIdData(final String userName)
-	{
+	public UserIdData(final String userName) {
 		this.userNameToDisplay = userName;
 	}
-		
+
 	/**
-	 * Metoda zwracaj훳ca nazw휌 u탉ytkownika w celu dopasowania ich do wys흢anych przez nich wiadomo힄ci
+	 * 사용자가 보낸 메시지와 일치하도록 사용자의 이름을 반환
 	 * 
-	 * @return user name
+	 * @return userNameToDisplay
 	 */
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userNameToDisplay;
 	}
 }
-
