@@ -4,18 +4,16 @@ import java.io.Serializable;
 import java.util.HashSet;
 
 /**
- * Klasa opakowuj훳ca klas휌 Room, kt처ra jest wysy흢ana do klienta
- * 
- * @author Ignacy 힃Lusarczyk
+ * 방 패키지 클래스
  */
 public class RoomData implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	/**Zbi처r u탉ytkownik처w*/
+	/**userSet*/
 	private  final HashSet<UserData> userSet;
 	
 	/**
-	 * Konstruktor tworz훳cy obiekt na podstawie zadanych parametr처w
+	 * 주어진 매개 변수를 기반으로 객체를 생성하는 생성자
 	 * 
 	 * @param userSet
 	 */
@@ -25,9 +23,9 @@ public class RoomData implements Serializable
 	}
 	
 	/**
-	 * Metoda zwracaj훳ca zbi처r u탉ytkownik처w
+	 * 사용자의 집합을 반환
 	 * 
-	 * @return set u탉ytkownik처w
+	 * @return userSet
 	 */
 	public HashSet<UserData> getUserSet()
 	{

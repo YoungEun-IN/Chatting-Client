@@ -12,7 +12,7 @@ import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledE
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ConnectionEstablishedServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ConversationServerEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.MessageServerEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.InfoServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.MessageData;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserData;
 
@@ -47,7 +47,7 @@ public class View
 		this.strategyMap = new HashMap<Class<? extends ClientHandledEvent>, ClientHandeledEventStrategy>();
 		this.strategyMap.put(ConnectionEstablishedServerEvent.class, new ConnectionEstablishedStrategy());
 		this.strategyMap.put(ConversationServerEvent.class, new ConversationServerEventStrategy());
-		this.strategyMap.put(MessageServerEvent.class, new MessageServerEventStrategy());
+		this.strategyMap.put(InfoServerEvent.class, new MessageServerEventStrategy());
 	}
 	
 	/**Metoda odpowiedzialna za wykonanie strategii odpowiadającej dostarczonej makiety
@@ -118,7 +118,7 @@ public class View
 		@Override
 		void execute(ClientHandledEvent clientHandeledEventObject)
 		{
-			MessageServerEvent messageObject = (MessageServerEvent) clientHandeledEventObject;
+			InfoServerEvent messageObject = (InfoServerEvent) clientHandeledEventObject;
 			createJoinRoomView.displayInfoMessage(messageObject);
 		}
 	}
@@ -230,7 +230,7 @@ public class View
 		/**Przechodzimy po wszystkich użytkownikach i sprawdzamy czy dany użytkownik jest aktywny, jeśli jest to dodajemymy go do listy*/
 		for(UserData userData: conversationServerEvent.getRoom().getUserSet())
 		{
-			if(userData.isUserActive() == true)
+			if(userData.isActive() == true)
 			{
 				userListToSort.add(userData.getUserIdData().getUserName());
 			}

@@ -3,56 +3,48 @@ package pl.slusarczyk.ignacy.CommunicatorServer.model.data;
 import java.io.Serializable;
 import java.util.HashSet;
 
-
 /**
- * Klasa opakowuj훳ca klas휌 User, wysy흢ana do klienta
- * 
- * @author Ignacy 힃lusarczyk
+ * 사용자 패키지 클래스
  */
-public class UserData implements Serializable
-{
+public class UserData implements Serializable {
 	private static final long serialVersionUID = 1L;
-	/**Id u탉ytkownika*/
+	/** userIdData */
 	private final UserIdData userIdData;
-	/**Zbi처r opakowanych wiadomo힄ci u탉ytkownika*/
+	/** 사용자의 패키지 메시지 세트 */
 	private final HashSet<MessageData> usersMessages;
-	/**Flaga okre힄laj훳ca czy u탉ytkownik jest aktywny*/
+	/** 사용자가 활성 상태인지 여부를 나타내는 플래그 */
 	private final boolean isActive;
-	
-	public UserData(final UserIdData userIdData, final HashSet<MessageData> userMessages, final boolean isActive)
-	{
+
+	public UserData(final UserIdData userIdData, final HashSet<MessageData> userMessages, final boolean isActive) {
 		this.userIdData = userIdData;
 		this.usersMessages = userMessages;
 		this.isActive = isActive;
 	}
 
 	/**
-	 * Metoda zwracaj훳ca userID u탉ytkownika
+	 * 사용자의 userID를 반환
 	 * 
-	 * @return userId ID u탉ytkownika
+	 * @return userId ID
 	 */
-	public UserIdData getUserIdData() 
-	{
+	public UserIdData getUserIdData() {
 		return userIdData;
 	}
 
 	/**
-	 * Metoda zwracaj훳ca zbi처r opakowanych wiadomo힄ci u탉ytkownika
+	 * 사용자의 패키지 메시지 집합을 반환
 	 * 
-	 * @return usersMessages set opakowanych widomo힄ci
+	 * @return usersMessages
 	 */
-	public HashSet<MessageData> getUsersMessages() 
-	{
+	public HashSet<MessageData> getUsersMessages() {
 		return usersMessages;
 	}
-	
+
 	/**
-	 * Metoda zwracaj훳ca informacj휌 czy dany u탉ytkownik jest aktywny
+	 * 사용자가 활성 상태인지 여부에 대한 정보를 반환
 	 * 
-	 * @return
+	 * @return isActive
 	 */
-	public boolean isUserActive()
-	{
+	public boolean isActive() {
 		return isActive;
 	}
 }

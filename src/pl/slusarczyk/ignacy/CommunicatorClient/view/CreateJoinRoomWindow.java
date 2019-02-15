@@ -17,106 +17,98 @@ import javax.swing.SwingUtilities;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.CreateNewRoom;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.JoinExistingRoom;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.MessageServerEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.InfoServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
-/**Klasa odpowiedzialna za okno tworzenia lub dolaczania do pokoju**/
-class CreateJoinRoomWindow
-{
-	/**Ramka aplikacji*/
+/**
+ * 방을 만들거나 연결하는 창을 담당하는 클래스
+ **/
+class CreateJoinRoomWindow {
+	/** 적용 프레임 */
 	final JFrame frame;
 
-	/**Pole wpisywania nazwy u탉ytkownika*/
+	/** 사용자 이름 입력 필드 */
 	final JTextField userNameField;
-	/**Pole wpisywania nazwy pokoju*/
+	/** 방 이름 입력 필드 */
 	final JTextField roomNameField;
-	/**Przycisk potwierdzaj훳cy wpisane informacje i tworz훳cy nowy pok처j*/
+	/** 입력 된 정보를 확인하고 새 방을 만드는 버튼 */
 	JButton submitButtonAndJoinRoom;
-	/**Przycisk potwierdzaj훳cy wpisane informacje i do흢훳czanie do nowego pokoju*/
+	/** 입력 된 정보를 확인하고 새 방에 참여하는 버튼 */
 	JButton submitButtonAndCreateRoom;
-	/**Kolejka blokujaca do ktorej sa dodawane nowe eventy*/
+	/** 새 이벤트가 추가 된 블로킹 큐 */
 	private final BlockingQueue<ServerHandledEvent> eventQueue;
 
-	public CreateJoinRoomWindow(final BlockingQueue<ServerHandledEvent> eventQueueObject)
-	{
+	public CreateJoinRoomWindow(final BlockingQueue<ServerHandledEvent> eventQueueObject) {
 		this.eventQueue = eventQueueObject;
-		
-		/**Tworzymy g흢처wne okno*/
+
+		/** 기본 창 만들기 */
 		frame = new JFrame("Create or join room");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(new Dimension(400, 150));
-	
-		/**Ustawiamy odpowiedni Layout*/
-		JPanel container = new JPanel();	
+
+		/** 올바른 레이아웃을 설정 */
+		JPanel container = new JPanel();
 		BoxLayout layout = new BoxLayout(container, BoxLayout.Y_AXIS);
 		container.setLayout(layout);
-			
-		/**Inicjalizujemy przycisk tworzenia nowego pokoju*/
+
+		/** 새로운 방을 만들기위한 버튼을 초기화 */
 		submitButtonAndJoinRoom = new JButton("Create");
-		submitButtonAndJoinRoom.addActionListener(new ActionListener() 
-		{	
+		submitButtonAndJoinRoom.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{	
+			public void actionPerformed(ActionEvent e) {
 				eventQueue.offer(new CreateNewRoom(roomNameField.getText(), new UserIdData(userNameField.getText())));
 			}
 		});
-		
-		/**Inicjalizujemy przycisk do흢훳czania do istniej훳cego pokoju*/
+
+		/** 버튼을 초기화하여 기존 회의실에 연결 */
 		submitButtonAndCreateRoom = new JButton("Join");
-		submitButtonAndCreateRoom.addActionListener(new ActionListener()
-		{
+		submitButtonAndCreateRoom.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
+			public void actionPerformed(ActionEvent e) {
 				eventQueue.offer(new JoinExistingRoom(roomNameField.getText(), new UserIdData(userNameField.getText())));
 			}
 		});
-		
+
 		userNameField = new JTextField();
 		roomNameField = new JTextField();
-			
-			
-		/**Ustawiamy po흢o탉enie wszystkich element처w*/
+
+		/** 모든 요소의 위치를 설정 */
 		userNameField.setAlignmentX(Component.CENTER_ALIGNMENT);
 		roomNameField.setAlignmentX(Component.CENTER_ALIGNMENT);
 		submitButtonAndJoinRoom.setAlignmentX(Component.CENTER_ALIGNMENT);
 		submitButtonAndCreateRoom.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
-		/**Ustawiamy tekst domy힄lnie wpisany w poszczeg처lne pola, pe흢ni훳cy funkcj휌 informacyjn훳*/
-		userNameField.setText("Test");
-		roomNameField.setText("Projekt");
-			
-		/**Dodajemy wszystkie elemenety do kontenera*/
-		 container.add(userNameField);
-		 container.add(roomNameField);
-		 container.add(submitButtonAndJoinRoom);
-		 container.add(submitButtonAndCreateRoom);
-			 
-		 /**Dodajemy kontener do g흢처wnej ramki oraz wy힄wieltamy g흢처wna ramk휌*/
-		 frame.add(container);
-		 frame.setVisible(true);
+
+		/** 개별 필드에 입력 된 텍스트를 설정 */
+		userNameField.setText("userName");
+		roomNameField.setText("roomName");
+
+		/** 모든 항목을 컨테이너에 추가 */
+		container.add(userNameField);
+		container.add(roomNameField);
+		container.add(submitButtonAndJoinRoom);
+		container.add(submitButtonAndCreateRoom);
+
+		/** 컨테이너를 메인 프레임에 추가하고 메인 프레임을 선택 */
+		frame.add(container);
+		frame.setVisible(true);
 	}
-	
+
 	/**
-	 * Metoda odpowiedzialna za zamkni휌cie okna
+	 * 윈도우를 닫는 메소드
 	 */
-	public void closeCreateRoomWindow()
-	{
+	public void closeCreateRoomWindow() {
 		frame.setVisible(false);
 		frame.dispose();
 	}
 
 	/**
-	 * Metoda odpowiedzialna za wy힄wietlanie informacji przychodzacych z serwera
+	 * 서버에서 오는 정보를 표시하는 메소드
 	 * 
-	 * @param messageObject Obiekt InformationMessage zawieraj훳cyc informacj휌 do wyswietlenia 
+	 * @param messageObject
 	 */
-	public void displayInfoMessage(final MessageServerEvent messageObject)
-	{
+	public void displayInfoMessage(final InfoServerEvent messageObject) {
 		SwingUtilities.invokeLater(new Runnable() {
-			public void run()
-			{
+			public void run() {
 				JOptionPane.showMessageDialog(frame, messageObject.getMessage());
 			}
 		});
