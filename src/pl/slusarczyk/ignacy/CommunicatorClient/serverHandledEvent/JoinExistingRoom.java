@@ -9,7 +9,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
  * 
  * @author Ignacy Ślusarczyk
  */
-public class JoinExistingRoom extends ServerHandeledEvent implements Serializable
+public class JoinExistingRoom extends ServerHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**Nazwa pokoju*/

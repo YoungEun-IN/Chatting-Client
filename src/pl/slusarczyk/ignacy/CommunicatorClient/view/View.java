@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandeledEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandeledEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ConnectionEstablishedServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ConversationServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.MessageServerEvent;
@@ -28,23 +28,23 @@ public class View
 	/**Główne okno chatu*/
 	private MainChatWindow mainChatView;
 	/**Kolejka blokująca do której wrzucamy zdarzenia obsługiwane przez kontroler*/
-	private final BlockingQueue<ServerHandeledEvent> eventQueue;
+	private final BlockingQueue<ServerHandledEvent> eventQueue;
 	
-	private final Map<Class<? extends ClientHandeledEvent>, ClientHandeledEventStrategy> strategyMap;
+	private final Map<Class<? extends ClientHandledEvent>, ClientHandeledEventStrategy> strategyMap;
 	
 	/**
 	 * Konstruktor tworzący widok na podstawie zadanego parametru
 	 * 
 	 * @param eventQueue kolejka blokująca
 	 */
-	public View(BlockingQueue<ServerHandeledEvent> eventQueue)
+	public View(BlockingQueue<ServerHandledEvent> eventQueue)
 	{
 		this.createJoinRoomView = new CreateJoinRoomWindow(eventQueue);
 		this.eventQueue = eventQueue;
 		
 		
 		/**Tworze mapę strategii obsługi makiet*/
-		this.strategyMap = new HashMap<Class<? extends ClientHandeledEvent>, ClientHandeledEventStrategy>();
+		this.strategyMap = new HashMap<Class<? extends ClientHandledEvent>, ClientHandeledEventStrategy>();
 		this.strategyMap.put(ConnectionEstablishedServerEvent.class, new ConnectionEstablishedStrategy());
 		this.strategyMap.put(ConversationServerEvent.class, new ConversationServerEventStrategy());
 		this.strategyMap.put(MessageServerEvent.class, new MessageServerEventStrategy());
@@ -54,10 +54,10 @@ public class View
 	 * 
 	 * @param clientHandeledEventObject obiekt wysłany przez serwer
 	 */
-	public void executeClientHandeledEvent(ClientHandeledEvent clientHandeledEventObject) 
+	public void executeClientHandeledEvent(ClientHandledEvent clientHandeledEventObject) 
 	{
 		ClientHandeledEventStrategy clientHandeledEventStrategy = strategyMap.get(clientHandeledEventObject.getClass());
-		clientHandeledEventStrategy.execute((ClientHandeledEvent)clientHandeledEventObject);
+		clientHandeledEventStrategy.execute((ClientHandledEvent)clientHandeledEventObject);
 	}
 	
 	/**
@@ -70,9 +70,9 @@ public class View
 		/**
 		 * Abstrakcyjna metoda opisująca obsługę danego zdarzenia.
 		 * 
-		 * @param ClientHandeledEvent makieta od serwera, która musi zostać poprawnie obsłużona
+		 * @param ClientHandledEvent makieta od serwera, która musi zostać poprawnie obsłużona
 		 */
-		abstract void execute(final ClientHandeledEvent clientHandeledEventObject);
+		abstract void execute(final ClientHandledEvent clientHandeledEventObject);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class View
 	{
 		
 		@Override
-		void execute(ClientHandeledEvent clientHandeledEventObject) 
+		void execute(ClientHandledEvent clientHandeledEventObject) 
 		{
 			ConnectionEstablishedServerEvent connectionEstablished = (ConnectionEstablishedServerEvent) clientHandeledEventObject;
 			mainChatView = new MainChatWindow(eventQueue,connectionEstablished.getUserIDData(), connectionEstablished.getRoomName());
@@ -101,7 +101,7 @@ public class View
 	class ConversationServerEventStrategy extends ClientHandeledEventStrategy
 	{
 		@Override
-		void execute(ClientHandeledEvent clientHandeledEventObject) 
+		void execute(ClientHandledEvent clientHandeledEventObject) 
 		{
 			ConversationServerEvent conversationObject = (ConversationServerEvent) clientHandeledEventObject;
 			updateUserConversationAndList(conversationObject);
@@ -116,7 +116,7 @@ public class View
 	class MessageServerEventStrategy extends ClientHandeledEventStrategy
 	{
 		@Override
-		void execute(ClientHandeledEvent clientHandeledEventObject)
+		void execute(ClientHandledEvent clientHandeledEventObject)
 		{
 			MessageServerEvent messageObject = (MessageServerEvent) clientHandeledEventObject;
 			createJoinRoomView.displayInfoMessage(messageObject);

@@ -6,9 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandeledEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.view.View;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandeledEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandledEvent;
 
 /**
  * Główna klasa klienta, w której następuje połączenie z serwerem oraz przechowywanie informacji o aktualnym połączeniu
@@ -25,7 +25,7 @@ public class Client
 	/**Strumień wejściowy*/
 	private ObjectInputStream inputStream;
 	/**Kolejka blokująca do której client dodaje zdarzenia z serwera w celu obsłużenia ich w kontrolerze*/
-	private final BlockingQueue<ServerHandeledEvent> eventQueue;
+	private final BlockingQueue<ServerHandledEvent> eventQueue;
 	/**Referencja do widoku*/
 	private final View view;
 	
@@ -34,7 +34,7 @@ public class Client
 	 * 
 	 * @param eventQueue kolejka blokująca
 	 */
-	public Client(final BlockingQueue<ServerHandeledEvent> eventQueue, final String ipAdress, final int port, final View view)
+	public Client(final BlockingQueue<ServerHandledEvent> eventQueue, final String ipAdress, final int port, final View view)
 	{
 
 		this.eventQueue = eventQueue;
@@ -62,7 +62,7 @@ public class Client
 		{
 			try
 			{
-				ServerHandeledEvent serverHandeledEvent = eventQueue.take();
+				ServerHandledEvent serverHandeledEvent = eventQueue.take();
 				
 				try
 				{
@@ -111,7 +111,7 @@ public class Client
 			{
 				try 
 				{	
-					ClientHandeledEvent serverEvent = (ClientHandeledEvent)inputStream.readObject();
+					ClientHandledEvent serverEvent = (ClientHandledEvent)inputStream.readObject();
 					view.executeClientHandeledEvent(serverEvent);
 				}	
 				catch(IOException e) 

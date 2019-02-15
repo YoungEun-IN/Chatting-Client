@@ -7,7 +7,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
  * 
  * @author Ignacy Ślusarczyk
  */
-public class ClientLeftRoom extends ServerHandeledEvent implements Serializable
+public class ClientLeftRoom extends ServerHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**Nazwa użytkownika, który wyszedł z chatu*/

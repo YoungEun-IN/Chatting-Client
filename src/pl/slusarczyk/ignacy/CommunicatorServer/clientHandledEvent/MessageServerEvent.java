@@ -9,7 +9,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
  * 
  * @author Ignacy Ślusarczyk
  */
-public class MessageServerEvent extends ClientHandeledEvent implements Serializable
+public class MessageServerEvent extends ClientHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**Wiadomość, która ma zostać wyświetlona u użytkownika*/

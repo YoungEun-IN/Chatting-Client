@@ -5,6 +5,6 @@ package pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent;
  * 
  * @author Ignacy Ślusarczyk
  */
-public abstract class  ClientHandeledEvent
+public abstract class  ClientHandledEvent
 {
 }

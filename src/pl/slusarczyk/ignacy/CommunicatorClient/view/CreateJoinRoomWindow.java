@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.CreateNewRoom;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.JoinExistingRoom;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandeledEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.MessageServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
@@ -35,9 +35,9 @@ class CreateJoinRoomWindow
 	/**Przycisk potwierdzający wpisane informacje i dołączanie do nowego pokoju*/
 	JButton submitButtonAndCreateRoom;
 	/**Kolejka blokujaca do ktorej sa dodawane nowe eventy*/
-	private final BlockingQueue<ServerHandeledEvent> eventQueue;
+	private final BlockingQueue<ServerHandledEvent> eventQueue;
 
-	public CreateJoinRoomWindow(final BlockingQueue<ServerHandeledEvent> eventQueueObject)
+	public CreateJoinRoomWindow(final BlockingQueue<ServerHandledEvent> eventQueueObject)
 	{
 		this.eventQueue = eventQueueObject;
 		

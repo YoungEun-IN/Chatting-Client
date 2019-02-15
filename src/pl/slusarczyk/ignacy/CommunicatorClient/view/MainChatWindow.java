@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ClientLeftRoom;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.NewMessage;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandeledEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**Klasa odpowiedzialna za wyświetlanie głównego okna chatu**/
@@ -40,14 +40,14 @@ class MainChatWindow
 	private JScrollPane userTextMessageScroll;
 	private JScrollPane onlineUsersScroll;
 	/**Kolejka blokujaca do ktorej sa dodawane nowe eventy*/
-	private final BlockingQueue<ServerHandeledEvent> eventQueue;
+	private final BlockingQueue<ServerHandledEvent> eventQueue;
 	/**Opakowana nazwa użytkownika za pomocą, której serwer identyfikuje jego eventy*/
 	private final UserIdData userIdData;
 	/**Nazwa pokoju, w którym użytkownika się znajduje*/
 	private final String roomName;
 	
 	/**Konstruktro inicjulizujący i wyświetlający ramkę*/
-	public MainChatWindow( final BlockingQueue<ServerHandeledEvent> eventQueue, final UserIdData userIdData, final String roomName)
+	public MainChatWindow( final BlockingQueue<ServerHandledEvent> eventQueue, final UserIdData userIdData, final String roomName)
 	{	
 		this.userIdData = userIdData;
 		this.roomName = roomName;

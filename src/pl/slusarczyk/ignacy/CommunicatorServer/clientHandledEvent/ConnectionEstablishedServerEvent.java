@@ -9,7 +9,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
  * 
  * @author Ignacy Ślusarczyk
  */
-public class ConnectionEstablishedServerEvent extends ClientHandeledEvent implements Serializable
+public class ConnectionEstablishedServerEvent extends ClientHandledEvent implements Serializable
 {
 	 private static final long serialVersionUID = 1L;
 	/**Invormacja o nawiązaniu połączenia*/

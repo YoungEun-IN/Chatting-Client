@@ -10,7 +10,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.RoomData;
  * 
  * @author Ignacy Ślusarczyk
  */
-public class ConversationServerEvent extends ClientHandeledEvent implements Serializable
+public class ConversationServerEvent extends ClientHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**Opakowane informacje o pokoju*/
