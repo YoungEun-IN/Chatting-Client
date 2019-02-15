@@ -9,7 +9,7 @@ public class UserIdData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** userNameToDisplay */
-	private final String userNameToDisplay;
+	private final String userName;
 
 	/**
 	 * 지정된 파라미터에 근거 해 오브젝트를 생성하는 생성자
@@ -17,7 +17,7 @@ public class UserIdData implements Serializable {
 	 * @param userName
 	 */
 	public UserIdData(final String userName) {
-		this.userNameToDisplay = userName;
+		this.userName = userName;
 	}
 
 	/**
@@ -26,6 +26,6 @@ public class UserIdData implements Serializable {
 	 * @return userNameToDisplay
 	 */
 	public String getUserName() {
-		return userNameToDisplay;
+		return userName;
 	}
 }
