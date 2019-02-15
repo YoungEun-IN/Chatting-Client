@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class UserIdData implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	/** userNameToDisplay */
 	private final String userNameToDisplay;
 
