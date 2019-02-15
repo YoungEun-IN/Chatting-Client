@@ -11,119 +11,91 @@ import pl.slusarczyk.ignacy.CommunicatorClient.view.View;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandledEvent;
 
 /**
- * G흢처wna klasa klienta, w kt처rej nast휌puje po흢훳czenie z serwerem oraz przechowywanie informacji o aktualnym po흢훳czeniu
  * 
- * @author Ignacy 힃lusarczyk
+ * 서버와의 연결이 이루어지는 주 클라이언트 클래스 및 현재 연결에 대한 정보 저장
  */
-public class Client 
-{
-
-	/**Socket klienta*/
+public class Client {
+	/** socket */
 	private Socket socket;
-	/**Strumie흦 wyj힄ciowy*/
+	/** outputStream */
 	private ObjectOutputStream outputStream;
-	/**Strumie흦 wej힄ciowy*/
+	/** inputStream */
 	private ObjectInputStream inputStream;
-	/**Kolejka blokuj훳ca do kt처rej client dodaje zdarzenia z serwera w celu obs흢u탉enia ich w kontrolerze*/
-	private final BlockingQueue<ServerHandledEvent> eventQueue;
-	/**Referencja do widoku*/
-	private final View view;
-	
+
 	/**
-	 * Konstruktor tworz훳cy klienta na podstawie zadanych argument처w
-	 * 
-	 * @param eventQueue kolejka blokuj훳ca
+	 * 클라이언트가 서버에서 대상으로 추가되는 블로킹 큐
 	 */
-	public Client(final BlockingQueue<ServerHandledEvent> eventQueue, final String ipAdress, final int port, final View view)
-	{
+	private final BlockingQueue<ServerHandledEvent> eventQueue;
+	/** view */
+	private final View view;
+
+	/**
+	 * 주어진 인수에 기반하여 클라이언트를 생성하는 생성자
+	 * 
+	 * @param eventQueue
+	 */
+	public Client(final BlockingQueue<ServerHandledEvent> eventQueue, final String ipAdress, final int port, final View view) {
 
 		this.eventQueue = eventQueue;
 		this.view = view;
-		
-		try
-		{
+
+		try {
 			this.socket = new Socket(ipAdress, port);
 			this.inputStream = new ObjectInputStream(socket.getInputStream());
 			this.outputStream = new ObjectOutputStream(socket.getOutputStream());
 			ListenFromServer listenFromServer = new ListenFromServer();
 			listenFromServer.start();
-		}
-		catch (IOException ex)
-		{
+		} catch (IOException ex) {
 			System.err.println(ex);
 		}
 	}
 
-	
-	public void listenEventAndSend()
-	{
-		
-		while (true)
-		{
-			try
-			{
+	public void listenEventAndSend() {
+
+		while (true) {
+			try {
 				ServerHandledEvent serverHandeledEvent = eventQueue.take();
-				
-				try
-				{
+
+				try {
 					outputStream.writeObject(serverHandeledEvent);
-				}
-				catch(IOException ex)
-				{
+				} catch (IOException ex) {
 					System.exit(1);
 				}
-			}
-			catch (InterruptedException ex)
-			{
+			} catch (InterruptedException ex) {
 				System.err.print(ex);
 			}
-			
+
 		}
 	}
-	
-	/**
-	 * Metoda bezpiecznie zamykaj훳ca po흢훳czenie
-	 */
-	public void closeConnection()
-	{
-		try
-		{
 
+	/**
+	 * 연결을 안전하게 닫는 메소드
+	 */
+	public void closeConnection() {
+		try {
 			socket.close();
-		}
-		catch(IOException ex)
-		{
+		} catch (IOException ex) {
 			System.err.println(ex);
 		}
 	}
-	
+
 	/**
-	 * Klasa wewn휌trzna s흢u탉훳ca do nas흢uchiwania zdarze흦 od serwera. W przypadku zdarze흦 od serwera, dodawane s훳 one do mapy
-	 * 
-	 * @author Ignacy 힃lusarczyk 
+	 * 서버의 이벤트를 수신하는 내부 클래스
 	 */
-	public class ListenFromServer extends Thread 
-	{
-		public void run() 
-		{
-			System.out.println("Rozpoczeto nasluchiwanie zdarze흦 od serwera");
-			while (true) 
-			{
-				try 
-				{	
-					ClientHandledEvent serverEvent = (ClientHandledEvent)inputStream.readObject();
+	public class ListenFromServer extends Thread {
+		public void run() {
+			System.out.println("서버에서 이벤트 수신이 시작되었습니다.");
+			while (true) {
+				try {
+					ClientHandledEvent serverEvent = (ClientHandledEvent) inputStream.readObject();
 					view.executeClientHandeledEvent(serverEvent);
-				}	
-				catch(IOException e) 
-				{
+				} catch (IOException e) {
 					closeConnection();
 					System.exit(1);
-				}
-				catch(ClassNotFoundException e) 
-				{
+				} catch (ClassNotFoundException e) {
 					System.err.println(e);
 				}
-			}				
+			}
 		}
 	}
 }

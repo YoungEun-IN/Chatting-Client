@@ -8,16 +8,14 @@ import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledE
 import pl.slusarczyk.ignacy.CommunicatorClient.view.View;
 
 /**
- * G흢처wna klasa applikacji odpowiada za odpowiednie zainicjalizowanie wszystkich komponent처w
- * 
- * @author Ignacy 힃lusarczyk
+ * 모든 구성 요소의 적절한 초기화를 담당
  */
 public class CommunicatorClient 
 {
 	/**
-	 * G흢owna metoda aplikacjitworzy widok, kolejk휌 zdarze흦 oraz kontroler.
+	 * 모델, 이벤트 큐 및 컨트롤러를 생성합니다.
 	 * 
-	 * @param args argumenty wywo흢ania programu
+	 * @param args 
 	 */
 	public static void main(String args[])
 	{
