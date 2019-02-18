@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.CreateNewRoomEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.JoinExistingRoomEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.AlertServerEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.CreateNewRoomEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.JoinExistingRoomEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.AlertServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
@@ -36,9 +36,9 @@ class CreateOrJoinRoomView {
 	/** 입력 된 정보를 확인하고 새 방에 참여하는 버튼 */
 	JButton submitButtonAndCreateRoom;
 	/** 새 이벤트가 추가 된 블로킹 큐 */
-	private final BlockingQueue<ServerHandledEvent> eventQueue;
+	private final BlockingQueue<ServerHandleEvent> eventQueue;
 
-	public CreateOrJoinRoomView(final BlockingQueue<ServerHandledEvent> eventQueueObject) {
+	public CreateOrJoinRoomView(final BlockingQueue<ServerHandleEvent> eventQueueObject) {
 		this.eventQueue = eventQueueObject;
 
 		/** 기본 창 만들기 */

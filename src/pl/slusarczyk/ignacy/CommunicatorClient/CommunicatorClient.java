@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import pl.slusarczyk.ignacy.CommunicatorClient.connection.Connection;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.view.View;
 
 /**
@@ -19,7 +19,7 @@ public class CommunicatorClient
 	 */
 	public static void main(String args[])
 	{
-		BlockingQueue<ServerHandledEvent> eventQueue = new LinkedBlockingQueue<ServerHandledEvent>();
+		BlockingQueue<ServerHandleEvent> eventQueue = new LinkedBlockingQueue<ServerHandleEvent>();
 		View view = new View(eventQueue);
 		Connection client = new Connection(eventQueue,"localhost", 5000, view);
 		client.listenEventAndSend();

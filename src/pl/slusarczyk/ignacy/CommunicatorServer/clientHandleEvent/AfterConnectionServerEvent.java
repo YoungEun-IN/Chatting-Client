@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent;
+package pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 /**
  * 클라이언트 응용 프로그램에서 기본 대화창을 열 가능성을 알리는 클래스
  */
-public class AfterConnectionServerEvent extends ClientHandledEvent implements Serializable {
+public class AfterConnectionServerEvent extends ClientHandleEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 감싸인 사용자 이름 */
 	private final UserIdData userIDData;

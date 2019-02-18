@@ -14,9 +14,9 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.QuitChattingEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.SendMessageEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.QuitChattingEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.SendMessageEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /** 기본 채팅 창을 표시하는 클래스 **/
@@ -39,14 +39,14 @@ class MainChatView {
 	private JScrollPane userTextMessageScroll;
 	private JScrollPane onlineUsersScroll;
 	/** 새 이벤트가 추가 된 블로킹 큐 */
-	private final BlockingQueue<ServerHandledEvent> eventQueue;
+	private final BlockingQueue<ServerHandleEvent> eventQueue;
 	/** 서버가 자신의 이벤트를 식별하는 데 도움을 준 사용자의 래핑 된 이름 */
 	private final UserIdData userIdData;
 	/** 사용자가있는 방의 이름 */
 	private final String roomName;
 
 	/** 프레임 시작 및 표시 */
-	public MainChatView(final BlockingQueue<ServerHandledEvent> eventQueue, final UserIdData userIdData, final String roomName) {
+	public MainChatView(final BlockingQueue<ServerHandleEvent> eventQueue, final UserIdData userIdData, final String roomName) {
 		this.userIdData = userIdData;
 		this.roomName = roomName;
 		this.eventQueue = eventQueue;

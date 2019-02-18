@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent;
+package pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent;
 
 import java.io.Serializable;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
@@ -6,7 +6,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 /**
  * 유저가 메세지를 송신하기 위해서 버튼을 누르는 이벤트를 기술하는 클래스
  */
-public class SendMessageEvent extends ServerHandledEvent implements Serializable
+public class SendMessageEvent extends ServerHandleEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**방의 이름*/

@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent;
+package pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 /**
  * 사용자가 방에 연결하기 위해 버튼을 누르는 이벤트를 설명하는 클래스
  */
-public class JoinExistingRoomEvent extends ServerHandledEvent implements Serializable
+public class JoinExistingRoomEvent extends ServerHandleEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**roomName*/

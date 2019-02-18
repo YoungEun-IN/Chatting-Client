@@ -6,9 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.view.View;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandledEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.ClientHandleEvent;
 
 /**
  * 
@@ -25,7 +25,7 @@ public class Connection {
 	/**
 	 * 클라이언트가 서버에서 대상으로 추가되는 블로킹 큐
 	 */
-	private final BlockingQueue<ServerHandledEvent> eventQueue;
+	private final BlockingQueue<ServerHandleEvent> eventQueue;
 	/** view */
 	private final View view;
 
@@ -34,7 +34,7 @@ public class Connection {
 	 * 
 	 * @param eventQueue
 	 */
-	public Connection(final BlockingQueue<ServerHandledEvent> eventQueue, final String ipAdress, final int port, final View view) {
+	public Connection(final BlockingQueue<ServerHandleEvent> eventQueue, final String ipAdress, final int port, final View view) {
 
 		this.eventQueue = eventQueue;
 		this.view = view;
@@ -54,10 +54,10 @@ public class Connection {
 
 		while (true) {
 			try {
-				ServerHandledEvent serverHandeledEvent = eventQueue.take();
+				ServerHandleEvent serverHandleEvent = eventQueue.take();
 
 				try {
-					outputStream.writeObject(serverHandeledEvent);
+					outputStream.writeObject(serverHandleEvent);
 				} catch (IOException ex) {
 					System.exit(1);
 				}
@@ -87,8 +87,8 @@ public class Connection {
 			System.out.println("서버에서 이벤트 수신이 시작되었습니다.");
 			while (true) {
 				try {
-					ClientHandledEvent serverEvent = (ClientHandledEvent) inputStream.readObject();
-					view.executeClientHandeledEvent(serverEvent);
+					ClientHandleEvent serverEvent = (ClientHandleEvent) inputStream.readObject();
+					view.executeClientHandleEvent(serverEvent);
 				} catch (IOException e) {
 					closeConnection();
 					System.exit(1);

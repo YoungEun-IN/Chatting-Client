@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandledEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.AfterConnectionServerEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ConversationServerEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.AlertServerEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.AfterConnectionServerEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.AlertServerEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.ClientHandleEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.ConversationServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.MessageData;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserData;
 
@@ -25,21 +25,21 @@ public class View {
 	/** 기본 채팅 창 */
 	private MainChatView mainChatView;
 	/** 컨트롤러가 처리 한 이벤트 이벤트를 던지는 블로킹 큐 */
-	private final BlockingQueue<ServerHandledEvent> eventQueue;
+	private final BlockingQueue<ServerHandleEvent> eventQueue;
 
-	private final Map<Class<? extends ClientHandledEvent>, ClientHandledEventStrategy> strategyMap;
+	private final Map<Class<? extends ClientHandleEvent>, ClientHandledEventStrategy> strategyMap;
 
 	/**
 	 * 지정된 파라미터에 근거하는 뷰를 작성하는 생성자
 	 * 
 	 * @param eventQueue
 	 */
-	public View(BlockingQueue<ServerHandledEvent> eventQueue) {
+	public View(BlockingQueue<ServerHandleEvent> eventQueue) {
 		this.createOrJoinRoomView = new CreateOrJoinRoomView(eventQueue);
 		this.eventQueue = eventQueue;
 
 		/** 전략 맵 생성 및 할당 */
-		this.strategyMap = new HashMap<Class<? extends ClientHandledEvent>, ClientHandledEventStrategy>();
+		this.strategyMap = new HashMap<Class<? extends ClientHandleEvent>, ClientHandledEventStrategy>();
 		this.strategyMap.put(AfterConnectionServerEvent.class, new AfterConnectionStrategy());
 		this.strategyMap.put(ConversationServerEvent.class, new ConversationServerEventStrategy());
 		this.strategyMap.put(AlertServerEvent.class, new MessageServerEventStrategy());
@@ -48,11 +48,11 @@ public class View {
 	/**
 	 * 상응하는 모형의 전략을 구현하는 책임을 지는 메소드
 	 * 
-	 * @param clientHandeledEventObject
+	 * @param clientHandleEventObject
 	 */
-	public void executeClientHandeledEvent(ClientHandledEvent clientHandeledEventObject) {
-		ClientHandledEventStrategy clientHandeledEventStrategy = strategyMap.get(clientHandeledEventObject.getClass());
-		clientHandeledEventStrategy.execute((ClientHandledEvent) clientHandeledEventObject);
+	public void executeClientHandleEvent(ClientHandleEvent clientHandleEventObject) {
+		ClientHandledEventStrategy clientHandleEventStrategy = strategyMap.get(clientHandleEventObject.getClass());
+		clientHandleEventStrategy.execute((ClientHandleEvent) clientHandleEventObject);
 	}
 
 	/**
@@ -62,9 +62,9 @@ public class View {
 		/**
 		 * 주어진 이벤트의 서비스를 기술하는 추상 메소드.
 		 * 
-		 * @param ClientHandledEvent
+		 * @param ClientHandleEvent
 		 */
-		abstract void execute(final ClientHandledEvent clientHandeledEvent);
+		abstract void execute(final ClientHandleEvent clientHandleEvent);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class View {
 	class AfterConnectionStrategy extends ClientHandledEventStrategy {
 
 		@Override
-		void execute(ClientHandledEvent clientHandledObject) {
+		void execute(ClientHandleEvent clientHandledObject) {
 			AfterConnectionServerEvent afterConnectionObject = (AfterConnectionServerEvent) clientHandledObject;
 			mainChatView = new MainChatView(eventQueue, afterConnectionObject.getUserIDData(), afterConnectionObject.getRoomName());
 			createOrJoinRoomView.closeCreateRoomWindow();
@@ -86,7 +86,7 @@ public class View {
 	 */
 	class ConversationServerEventStrategy extends ClientHandledEventStrategy {
 		@Override
-		void execute(ClientHandledEvent clientHandledObject) {
+		void execute(ClientHandleEvent clientHandledObject) {
 			ConversationServerEvent conversationObject = (ConversationServerEvent) clientHandledObject;
 			updateUserConversationAndList(conversationObject);
 		}
@@ -97,7 +97,7 @@ public class View {
 	 */
 	class MessageServerEventStrategy extends ClientHandledEventStrategy {
 		@Override
-		void execute(ClientHandledEvent clientHandledObject) {
+		void execute(ClientHandleEvent clientHandledObject) {
 			AlertServerEvent messageObject = (AlertServerEvent) clientHandledObject;
 			createOrJoinRoomView.displayMessage(messageObject);
 		}
