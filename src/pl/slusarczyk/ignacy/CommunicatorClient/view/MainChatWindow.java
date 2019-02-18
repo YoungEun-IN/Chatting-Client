@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ClientLeftRoomEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.QuitChattingEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.SendMessageEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
@@ -68,7 +68,7 @@ class MainChatWindow {
 		WindowAdapter exitListener = new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				eventQueue.offer(new ClientLeftRoomEvent(userIdData, roomName));
+				eventQueue.offer(new QuitChattingEvent(userIdData, roomName));
 				System.exit(0);
 			}
 		};

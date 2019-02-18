@@ -15,11 +15,10 @@ public class ConversationServerEvent extends ClientHandledEvent implements Seria
 	/**
 	 * 지정된 매개 변수를 기반으로 이벤트를 만드는 생성자
 	 * 
-	 * @param userConversation 사용자 간의 대화
-	 * @param listOfUsers      현재 채팅중인 사용자 목록
+	 * @param roomData
 	 */
-	public ConversationServerEvent(final RoomData room) {
-		this.roomData = room;
+	public ConversationServerEvent(final RoomData roomData) {
+		this.roomData = roomData;
 	}
 
 	/**

@@ -10,7 +10,7 @@ import java.util.concurrent.BlockingQueue;
 
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandledEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ConnectionEstablishedServerEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.MainChatViewServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ConversationServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.InfoServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.MessageData;
@@ -40,7 +40,7 @@ public class View {
 
 		/** 전략 맵 생성 및 할당 */
 		this.strategyMap = new HashMap<Class<? extends ClientHandledEvent>, ClientHandeledEventStrategy>();
-		this.strategyMap.put(ConnectionEstablishedServerEvent.class, new ConnectionEstablishedStrategy());
+		this.strategyMap.put(MainChatViewServerEvent.class, new MainChatViewStrategy());
 		this.strategyMap.put(ConversationServerEvent.class, new ConversationServerEventStrategy());
 		this.strategyMap.put(InfoServerEvent.class, new MessageServerEventStrategy());
 	}
@@ -70,12 +70,12 @@ public class View {
 	/**
 	 * 방의 연결 또는 생성이 성공적으로 완료된 서버의 정보를 처리하는 전략을 설명하는 내부 클래스
 	 */
-	class ConnectionEstablishedStrategy extends ClientHandeledEventStrategy {
+	class MainChatViewStrategy extends ClientHandeledEventStrategy {
 
 		@Override
-		void execute(ClientHandledEvent clientHandeledEventObject) {
-			ConnectionEstablishedServerEvent connectionEstablished = (ConnectionEstablishedServerEvent) clientHandeledEventObject;
-			mainChatView = new MainChatWindow(eventQueue, connectionEstablished.getUserIDData(), connectionEstablished.getRoomName());
+		void execute(ClientHandledEvent clientHandeledEvent) {
+			MainChatViewServerEvent mainChatViewServerEvent = (MainChatViewServerEvent) clientHandeledEvent;
+			mainChatView = new MainChatWindow(eventQueue, mainChatViewServerEvent.getUserIDData(), mainChatViewServerEvent.getRoomName());
 			createJoinRoomView.closeCreateRoomWindow();
 			createJoinRoomView = null;
 		}
@@ -94,8 +94,6 @@ public class View {
 
 	/**
 	 * 서버로부터 수신을 처리하여 표시 할 수있는 전략을 설명하는 내부 클래스
-	 * 
-	 * @author Ignacy 힃lusarczyk
 	 */
 	class MessageServerEventStrategy extends ClientHandeledEventStrategy {
 		@Override
@@ -110,7 +108,7 @@ public class View {
 	/**
 	 * 표시된 대화 및 활성 사용자를 업데이트하는 메소드
 	 * 
-	 * @param conversationServerEvent opakowane informacje do wy힄wietlenia
+	 * @param conversationServerEvent
 	 */
 	public void updateUserConversationAndList(ConversationServerEvent conversationServerEvent) {
 		updateConversation(conversationServerEvent);

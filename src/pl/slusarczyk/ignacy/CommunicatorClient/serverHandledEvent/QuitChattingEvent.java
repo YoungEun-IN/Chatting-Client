@@ -6,7 +6,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 /**
  * 채팅 종료 버튼을 누른 사용자의 이벤트를 설명하는 클래스입니다.
  */
-public class ClientLeftRoomEvent extends ServerHandledEvent implements Serializable {
+public class QuitChattingEvent extends ServerHandledEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 채팅을 떠난 사용자의 이름 */
 	private final UserIdData userIdData;
@@ -19,7 +19,7 @@ public class ClientLeftRoomEvent extends ServerHandledEvent implements Serializa
 	 * @param userName
 	 * @param roomName
 	 */
-	public ClientLeftRoomEvent(final UserIdData userIDData, final String roomName) {
+	public QuitChattingEvent(final UserIdData userIDData, final String roomName) {
 		this.userIdData = userIDData;
 		this.roomName = roomName;
 	}

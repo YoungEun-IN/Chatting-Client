@@ -11,7 +11,7 @@ public class SendMessageEvent extends ServerHandledEvent implements Serializable
 	private static final long serialVersionUID = 1L;
 	/**방의 이름*/
 	private final String roomName;
-	/**감싸인 사용자 이름*/
+	/**사용자 이름*/
 	private final UserIdData userIDData;
 	/**사용자가 보내려는 메시지*/
 	private final String message;
