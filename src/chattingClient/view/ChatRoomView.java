@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorClient.view;
+package chattingClient.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,21 +14,21 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.QuitChattingEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.SendMessageEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
+import chattingClient.serverHandleEvent.QuitChattingEvent;
+import chattingClient.serverHandleEvent.SendMessageEvent;
+import chattingClient.serverHandleEvent.ServerHandleEvent;
 
 /** 기본 채팅 창을 표시하는 클래스 **/
 
-class MainChatView {
+class ChatRoomView {
 	/** 메인 프레임 */
 	private JFrame frame;
 	/** 사용자 간의 대화가 표시되는 영역 */
-	private JTextArea usersConversation;
+	private JTextArea conversationField;
 	/** 사용자가 메시지를 입력하는 영역 */
-	private JTextArea userTextfield;
+	private JTextArea userTextField;
 	/** 채팅 사용자가있는 지역 */
-	private JTextArea onlineUsers;
+	private JTextArea onlineUsersField;
 	/** 메시지 전송 버튼 */
 	private JButton sendButton;
 	/** 사용자가 목록을 표시하는 위치를 나타내는 레이블 */
@@ -45,10 +45,11 @@ class MainChatView {
 	private final String roomName;
 
 	/** 프레임 시작 및 표시 */
-	public MainChatView(final BlockingQueue<ServerHandleEvent> eventQueue, final String userName, final String roomName) {
+	public ChatRoomView(final BlockingQueue<ServerHandleEvent> eventQueue, final String userName, final String roomName) {
 		this.userName = userName;
 		this.roomName = roomName;
 		this.eventQueue = eventQueue;
+
 		initialize();
 		frame.setVisible(true);
 	}
@@ -64,37 +65,37 @@ class MainChatView {
 		frame.getContentPane().setLayout(null);
 
 		/** 채팅 창을 클릭 */
-		WindowAdapter exitListener = new WindowAdapter() {
+		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				eventQueue.offer(new QuitChattingEvent(userName, roomName));
+				System.out.println("사용자가 채팅 창을 닫았습니다");
 				System.exit(0);
 			}
-		};
-		frame.addWindowListener(exitListener);
+		});
 
 		/** 스크롤러와 함께 사용자 영역을 사용하여 대화 영역을 초기화 */
-		usersConversation = new JTextArea();
-		usersConversation.setBounds(12, 12, 260, 189);
-		usersConversation.setEditable(false);
-		userConversationScroll = new JScrollPane(usersConversation);
+		conversationField = new JTextArea();
+		conversationField.setBounds(12, 12, 260, 189);
+		conversationField.setEditable(false);
+		userConversationScroll = new JScrollPane(conversationField);
 		userConversationScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		userConversationScroll.setBounds(12, 12, 260, 189);
 		frame.getContentPane().add(userConversationScroll);
 
 		/** 사용자가 스크롤러로 메시지를 입력하는 영역 초기화 */
-		userTextfield = new JTextArea();
-		userTextfield.setBounds(12, 213, 260, 56);
-		userTextMessageScroll = new JScrollPane(userTextfield);
+		userTextField = new JTextArea();
+		userTextField.setBounds(12, 213, 260, 56);
+		userTextMessageScroll = new JScrollPane(userTextField);
 		userTextMessageScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		userTextMessageScroll.setBounds(12, 213, 260, 56);
 		frame.getContentPane().add(userTextMessageScroll);
 
 		/** 사용자 목록을 스크롤러와 함께 표시하는 영역 초기화 */
-		onlineUsers = new JTextArea();
-		onlineUsers.setBounds(284, 34, 154, 184);
-		onlineUsers.setEditable(false);
-		onlineUsersScroll = new JScrollPane(onlineUsers);
+		onlineUsersField = new JTextArea();
+		onlineUsersField.setBounds(284, 34, 154, 184);
+		onlineUsersField.setEditable(false);
+		onlineUsersScroll = new JScrollPane(onlineUsersField);
 		onlineUsersScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		onlineUsersScroll.setBounds(284, 34, 154, 184);
 		frame.getContentPane().add(onlineUsersScroll);
@@ -105,8 +106,8 @@ class MainChatView {
 		sendButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventQueue.offer(new SendMessageEvent(roomName, userName, userTextfield.getText()));
-				userTextfield.setText("");
+				eventQueue.offer(new SendMessageEvent(roomName, userName, userTextField.getText()));
+				userTextField.setText("");
 			}
 		});
 
@@ -121,13 +122,13 @@ class MainChatView {
 	/**
 	 * 사용자의 대화가 표시되는 창을 업데이트하는 메서드
 	 * 
-	 * @param usersConversationText
+	 * @param conversationToDisplay
 	 */
-	public void updateUsersConversation(final String usersConversationText) {
+	public void updateConversation(final String conversationToDisplay) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				usersConversation.setText("");
-				usersConversation.append(usersConversationText);
+				conversationField.setText("");
+				conversationField.append(conversationToDisplay);
 			}
 		});
 	}
@@ -135,13 +136,13 @@ class MainChatView {
 	/**
 	 * 활성 사용자의 표시된 목록을 업데이트하는 메소드
 	 * 
-	 * @param userList
+	 * @param userListToDisplay
 	 */
-	public void updateUsersList(final String userList) {
+	public void updateUsersList(final String userListToDisplay) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				onlineUsers.setText("");
-				onlineUsers.append(userList);
+				onlineUsersField.setText("");
+				onlineUsersField.append(userListToDisplay);
 			}
 		});
 	}

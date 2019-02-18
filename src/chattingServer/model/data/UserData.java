@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorServer.model.data;
+package chattingServer.model.data;
 
 import java.io.Serializable;
 import java.util.HashSet;

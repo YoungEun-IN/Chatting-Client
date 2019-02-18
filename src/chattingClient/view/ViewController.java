@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorClient.view;
+package chattingClient.view;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,22 +8,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.AfterConnectionServerEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.AlertServerEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.ClientHandleEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.ConversationServerEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.MessageData;
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserData;
+import chattingClient.serverHandleEvent.ServerHandleEvent;
+import chattingServer.clientHandleEvent.AlertToClientEvent;
+import chattingServer.clientHandleEvent.ChatRoomViewBuildEvent;
+import chattingServer.clientHandleEvent.ClientHandleEvent;
+import chattingServer.clientHandleEvent.GiveChattingInfoEvent;
+import chattingServer.model.data.MessageData;
+import chattingServer.model.data.UserData;
 
 /**
  * 창 표시 및 대화 수신을 담당
  */
-public class View {
+public class ViewController {
 	/** 새 룸 가입 또는 생성을위한 선택 창 */
 	private CreateOrJoinRoomView createOrJoinRoomView;
 	/** 기본 채팅 창 */
-	private MainChatView mainChatView;
+	private ChatRoomView chatRoomView;
 	/** 컨트롤러가 처리 한 이벤트 이벤트를 던지는 블로킹 큐 */
 	private final BlockingQueue<ServerHandleEvent> eventQueue;
 
@@ -34,15 +34,15 @@ public class View {
 	 * 
 	 * @param eventQueue
 	 */
-	public View(BlockingQueue<ServerHandleEvent> eventQueue) {
+	public ViewController(BlockingQueue<ServerHandleEvent> eventQueue) {
 		this.createOrJoinRoomView = new CreateOrJoinRoomView(eventQueue);
 		this.eventQueue = eventQueue;
 
 		/** 전략 맵 생성 및 할당 */
 		this.strategyMap = new HashMap<Class<? extends ClientHandleEvent>, ClientHandledEventStrategy>();
-		this.strategyMap.put(AfterConnectionServerEvent.class, new AfterConnectionStrategy());
-		this.strategyMap.put(ConversationServerEvent.class, new ConversationServerEventStrategy());
-		this.strategyMap.put(AlertServerEvent.class, new MessageServerEventStrategy());
+		this.strategyMap.put(ChatRoomViewBuildEvent.class, new AfterConnectionStrategy());
+		this.strategyMap.put(GiveChattingInfoEvent.class, new ConversationServerEventStrategy());
+		this.strategyMap.put(AlertToClientEvent.class, new MessageServerEventStrategy());
 	}
 
 	/**
@@ -74,8 +74,8 @@ public class View {
 
 		@Override
 		void execute(ClientHandleEvent clientHandledObject) {
-			AfterConnectionServerEvent afterConnectionObject = (AfterConnectionServerEvent) clientHandledObject;
-			mainChatView = new MainChatView(eventQueue, afterConnectionObject.getUserName(), afterConnectionObject.getRoomName());
+			ChatRoomViewBuildEvent chatRoomViewBuildEvent = (ChatRoomViewBuildEvent) clientHandledObject;
+			chatRoomView = new ChatRoomView(eventQueue, chatRoomViewBuildEvent.getUserName(), chatRoomViewBuildEvent.getRoomName());
 			createOrJoinRoomView.closeCreateRoomWindow();
 			createOrJoinRoomView = null;
 		}
@@ -87,7 +87,7 @@ public class View {
 	class ConversationServerEventStrategy extends ClientHandledEventStrategy {
 		@Override
 		void execute(ClientHandleEvent clientHandledObject) {
-			ConversationServerEvent conversationObject = (ConversationServerEvent) clientHandledObject;
+			GiveChattingInfoEvent conversationObject = (GiveChattingInfoEvent) clientHandledObject;
 			updateUserConversationAndList(conversationObject);
 		}
 	}
@@ -98,7 +98,7 @@ public class View {
 	class MessageServerEventStrategy extends ClientHandledEventStrategy {
 		@Override
 		void execute(ClientHandleEvent clientHandledObject) {
-			AlertServerEvent messageObject = (AlertServerEvent) clientHandledObject;
+			AlertToClientEvent messageObject = (AlertToClientEvent) clientHandledObject;
 			createOrJoinRoomView.displayMessage(messageObject);
 		}
 	}
@@ -106,38 +106,38 @@ public class View {
 	/**
 	 * 표시된 대화 및 활성 사용자를 업데이트하는 메소드
 	 * 
-	 * @param conversationServerEvent
+	 * @param giveChattingInfoEvent
 	 */
-	private void updateUserConversationAndList(ConversationServerEvent conversationServerEvent) {
-		updateConversation(conversationServerEvent);
-		updateUserList(conversationServerEvent);
+	private void updateUserConversationAndList(GiveChattingInfoEvent giveChattingInfoEvent) {
+		updateConversation(giveChattingInfoEvent);
+		updateUserList(giveChattingInfoEvent);
 	}
 
 	/**
 	 * 표시된 호출을 직접 업데이트하는 메소드
 	 * 
-	 * @param conversationServerEvent
+	 * @param giveChattingInfoEvent
 	 */
-	private void updateConversation(ConversationServerEvent conversationServerEvent) {
-		addUsersNicksToMessage(conversationServerEvent);
-		HashSet<MessageData> allMessages = gatherAllMessages(conversationServerEvent);
+	private void updateConversation(GiveChattingInfoEvent giveChattingInfoEvent) {
+		addUserNameToMessage(giveChattingInfoEvent);
+		HashSet<MessageData> allMessages = gatherAllMessages(giveChattingInfoEvent);
 		ArrayList<MessageData> sortedMessages = sortAllMessages(allMessages);
-		String conversationToDisplay = sortedMessagesToString(sortedMessages);
+		String conversationToDisplay = convertConversationToString(sortedMessages);
 
-		mainChatView.updateUsersConversation(conversationToDisplay);
+		chatRoomView.updateConversation(conversationToDisplay);
 	}
 
 	/**
 	 * 표시 한 후에 메시지를 식별 할 수 있도록 각 메시지에 사용자의 이름을 추가하는 메소드
 	 * 
-	 * @param conversationServerEvent
+	 * @param giveChattingInfoEvent
 	 */
-	void addUsersNicksToMessage(ConversationServerEvent conversationServerEvent) {
-		HashSet<UserData> userDataSet = conversationServerEvent.getRoom().getUserSet();
+	private void addUserNameToMessage(GiveChattingInfoEvent giveChattingInfoEvent) {
+		HashSet<UserData> userDataSet = giveChattingInfoEvent.getRoom().getUserSet();
 
 		for (UserData userData : userDataSet) {
 			for (MessageData messageData : userData.getUsersMessages()) {
-				messageData.setUserMessage(userData.getUserName() + ":" + messageData.getMessage());
+				messageData.setMessage(userData.getUserName() + ":" + messageData.getMessage());
 			}
 		}
 	}
@@ -145,13 +145,13 @@ public class View {
 	/**
 	 * 방에있는 사용자의 모든 메시지를 모으는 메소드
 	 * 
-	 * @param conversationServerEvent
+	 * @param giveChattingInfoEvent
 	 * @return conversation
 	 */
-	HashSet<MessageData> gatherAllMessages(ConversationServerEvent conversationServerEvent) {
+	private HashSet<MessageData> gatherAllMessages(GiveChattingInfoEvent giveChattingInfoEvent) {
 		HashSet<MessageData> conversation = new HashSet<MessageData>();
 
-		for (UserData userData : conversationServerEvent.getRoom().getUserSet()) {
+		for (UserData userData : giveChattingInfoEvent.getRoom().getUserSet()) {
 			conversation.addAll(userData.getUsersMessages());
 		}
 		return conversation;
@@ -164,7 +164,7 @@ public class View {
 	 * 
 	 * @return sortedMessages
 	 */
-	ArrayList<MessageData> sortAllMessages(HashSet<MessageData> usersMessages) {
+	private ArrayList<MessageData> sortAllMessages(HashSet<MessageData> usersMessages) {
 		ArrayList<MessageData> sortedMessages = new ArrayList<MessageData>();
 		sortedMessages.addAll(usersMessages);
 		Collections.sort(sortedMessages);
@@ -178,7 +178,7 @@ public class View {
 	 * 
 	 * @return conversationToDisplay
 	 */
-	String sortedMessagesToString(ArrayList<MessageData> sortedMessages) {
+	private String convertConversationToString(ArrayList<MessageData> sortedMessages) {
 		String conversationToDisplay = new String("");
 		for (MessageData messageData : sortedMessages) {
 			conversationToDisplay = conversationToDisplay + messageData.getMessage() + "\n";
@@ -189,24 +189,24 @@ public class View {
 	/**
 	 * 채팅에서 사용자 목록을 업데이트하는 메소드
 	 * 
-	 * @param conversationServerEvent
+	 * @param giveChattingInfoEvent
 	 */
-	void updateUserList(ConversationServerEvent conversationServerEvent) {
+	void updateUserList(GiveChattingInfoEvent giveChattingInfoEvent) {
 		String usersListToDisplay = new String("");
 
 		List<String> userListToSort = new ArrayList<String>();
 
 		/** 모든 사용자를 거쳐 목록에 추가 된 사용자가 활성 상태인지 확인 */
-		for (UserData userData : conversationServerEvent.getRoom().getUserSet()) {
-			if (userData.isActive() == true) {
+		for (UserData userData : giveChattingInfoEvent.getRoom().getUserSet()) {
+			if (userData.isActive()) {
 				userListToSort.add(userData.getUserName());
 			}
 		}
 
 		Collections.sort(userListToSort);
-		for (String imie : userListToSort) {
-			usersListToDisplay = usersListToDisplay + imie + "\n";
+		for (String userName : userListToSort) {
+			usersListToDisplay = usersListToDisplay + userName + "\n";
 		}
-		mainChatView.updateUsersList(usersListToDisplay);
+		chatRoomView.updateUsersList(usersListToDisplay);
 	}
 }

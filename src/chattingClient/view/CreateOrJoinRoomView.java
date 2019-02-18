@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorClient.view;
+package chattingClient.view;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.CreateNewRoomEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.JoinExistingRoomEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.AlertServerEvent;
+import chattingClient.serverHandleEvent.CreateNewRoomEvent;
+import chattingClient.serverHandleEvent.JoinExistingRoomEvent;
+import chattingClient.serverHandleEvent.ServerHandleEvent;
+import chattingServer.clientHandleEvent.AlertToClientEvent;
 
 /**
  * 방을 만들거나 연결하는 창을 담당하는 클래스
@@ -105,7 +105,7 @@ class CreateOrJoinRoomView {
 	 * 
 	 * @param messageObject
 	 */
-	public void displayMessage(final AlertServerEvent messageObject) {
+	public void displayMessage(final AlertToClientEvent messageObject) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				JOptionPane.showMessageDialog(frame, messageObject.getMessage());

@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorClient.connection;
+package chattingClient.connection;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,9 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.view.View;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.ClientHandleEvent;
+import chattingClient.serverHandleEvent.ServerHandleEvent;
+import chattingClient.view.ViewController;
+import chattingServer.clientHandleEvent.ClientHandleEvent;
 
 /**
  * 
@@ -27,14 +27,14 @@ public class Connection {
 	 */
 	private final BlockingQueue<ServerHandleEvent> eventQueue;
 	/** view */
-	private final View view;
+	private final ViewController view;
 
 	/**
 	 * 주어진 인수에 기반하여 클라이언트를 생성하는 생성자
 	 * 
 	 * @param eventQueue
 	 */
-	public Connection(final BlockingQueue<ServerHandleEvent> eventQueue, final String ipAdress, final int port, final View view) {
+	public Connection(final BlockingQueue<ServerHandleEvent> eventQueue, final String ipAdress, final int port, final ViewController view) {
 
 		this.eventQueue = eventQueue;
 		this.view = view;

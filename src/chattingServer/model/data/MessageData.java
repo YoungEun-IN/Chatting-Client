@@ -1,4 +1,4 @@
-package pl.slusarczyk.ignacy.CommunicatorServer.model.data;
+package chattingServer.model.data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -45,10 +45,10 @@ public class MessageData implements Comparable<MessageData>, Serializable {
 	/**
 	 * 클라이언트의 정렬 및 표시 전에 사용자에게 닉네임을 추가하는 데 필요한 메시지의 내용을 변경하는 메소드
 	 * 
-	 * @param newMessage
+	 * @param message
 	 */
-	public void setUserMessage(final String newMessage) {
-		message = newMessage;
+	public void setMessage(final String message) {
+		this.message = message;
 	}
 
 	/**

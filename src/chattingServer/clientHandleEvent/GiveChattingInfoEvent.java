@@ -1,13 +1,13 @@
-package pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent;
+package chattingServer.clientHandleEvent;
 
 import java.io.Serializable;
 
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.RoomData;
+import chattingServer.model.data.RoomData;
 
 /**
  * 서버의 메시지 수신을 나타내는 클래스와 클라이언트 윈도우에서 대화를 업데이트해야하는 필요성, 새 메시지가 추가 된 방에 대한 압축 된 데이터를 보냅니다.
  */
-public class ConversationServerEvent extends ClientHandleEvent implements Serializable {
+public class GiveChattingInfoEvent extends ClientHandleEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 방에 대한 감싸인 정보 */
 	private final RoomData roomData;
@@ -17,7 +17,7 @@ public class ConversationServerEvent extends ClientHandleEvent implements Serial
 	 * 
 	 * @param roomData
 	 */
-	public ConversationServerEvent(final RoomData roomData) {
+	public GiveChattingInfoEvent(final RoomData roomData) {
 		this.roomData = roomData;
 	}
 
