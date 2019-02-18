@@ -7,7 +7,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 /**
  * 사용자가 방에 연결하기 위해 버튼을 누르는 이벤트를 설명하는 클래스
  */
-public class JoinInExistingRoomEvent extends ServerHandledEvent implements Serializable
+public class JoinExistingRoomEvent extends ServerHandledEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**roomName*/
@@ -21,7 +21,7 @@ public class JoinInExistingRoomEvent extends ServerHandledEvent implements Seria
 	 * @param roomName 
 	 * @param userId ID
 	 */
-	public JoinInExistingRoomEvent (final String roomName,final UserIdData userIdData)
+	public JoinExistingRoomEvent (final String roomName,final UserIdData userIdData)
 	{
 		this.roomName = roomName;
 		this.userIDData = userIdData;
