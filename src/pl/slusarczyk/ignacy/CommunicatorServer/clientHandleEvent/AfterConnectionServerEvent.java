@@ -2,15 +2,13 @@ package pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent;
 
 import java.io.Serializable;
 
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserName;
-
 /**
  * 클라이언트 응용 프로그램에서 기본 대화창을 열 가능성을 알리는 클래스
  */
 public class AfterConnectionServerEvent extends ClientHandleEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 감싸인 사용자 이름 */
-	private final UserName userName;
+	private final String userName;
 	/** 가입한 방의 이름 */
 	private final String roomName;
 
@@ -20,7 +18,7 @@ public class AfterConnectionServerEvent extends ClientHandleEvent implements Ser
 	 * @param userName
 	 * @param roomName
 	 */
-	public AfterConnectionServerEvent(final UserName userName, final String roomName) {
+	public AfterConnectionServerEvent(final String userName, final String roomName) {
 		this.userName = userName;
 		this.roomName = roomName;
 	}
@@ -30,7 +28,7 @@ public class AfterConnectionServerEvent extends ClientHandleEvent implements Ser
 	 * 
 	 * @return userName
 	 */
-	public UserName getUserName() {
+	public String getUserName() {
 		return userName;
 	}
 

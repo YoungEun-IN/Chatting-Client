@@ -18,7 +18,6 @@ import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.CreateNewRoomEv
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.JoinExistingRoomEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.clientHandleEvent.AlertServerEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserName;
 
 /**
  * 방을 만들거나 연결하는 창을 담당하는 클래스
@@ -56,7 +55,7 @@ class CreateOrJoinRoomView {
 		submitButtonAndJoinRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventQueue.offer(new CreateNewRoomEvent(roomNameField.getText(), new UserName(userNameField.getText())));
+				eventQueue.offer(new CreateNewRoomEvent(roomNameField.getText(), userNameField.getText()));
 			}
 		});
 
@@ -65,7 +64,7 @@ class CreateOrJoinRoomView {
 		submitButtonAndCreateRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventQueue.offer(new JoinExistingRoomEvent(roomNameField.getText(), new UserName(userNameField.getText())));
+				eventQueue.offer(new JoinExistingRoomEvent(roomNameField.getText(), userNameField.getText()));
 			}
 		});
 

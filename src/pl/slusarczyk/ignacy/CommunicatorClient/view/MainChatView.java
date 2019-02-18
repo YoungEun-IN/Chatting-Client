@@ -17,7 +17,6 @@ import javax.swing.SwingUtilities;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.QuitChattingEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.SendMessageEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserName;
 
 /** 기본 채팅 창을 표시하는 클래스 **/
 
@@ -41,12 +40,12 @@ class MainChatView {
 	/** 새 이벤트가 추가 된 블로킹 큐 */
 	private final BlockingQueue<ServerHandleEvent> eventQueue;
 	/** 서버가 자신의 이벤트를 식별하는 데 도움을 준 사용자의 래핑 된 이름 */
-	private final UserName userName;
+	private final String userName;
 	/** 사용자가있는 방의 이름 */
 	private final String roomName;
 
 	/** 프레임 시작 및 표시 */
-	public MainChatView(final BlockingQueue<ServerHandleEvent> eventQueue, final UserName userName, final String roomName) {
+	public MainChatView(final BlockingQueue<ServerHandleEvent> eventQueue, final String userName, final String roomName) {
 		this.userName = userName;
 		this.roomName = roomName;
 		this.eventQueue = eventQueue;

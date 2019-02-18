@@ -1,7 +1,6 @@
 package pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent;
 
 import java.io.Serializable;
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserName;
 
 /**
  * 유저가 메세지를 송신하기 위해서 버튼을 누르는 이벤트를 기술하는 클래스
@@ -12,7 +11,7 @@ public class SendMessageEvent extends ServerHandleEvent implements Serializable
 	/**방의 이름*/
 	private final String roomName;
 	/**사용자 이름*/
-	private final UserName userName;
+	private final String userName;
 	/**사용자가 보내려는 메시지*/
 	private final String message;
 	
@@ -23,7 +22,7 @@ public class SendMessageEvent extends ServerHandleEvent implements Serializable
 	 * @param userID 
 	 * @param message
 	 */
-	public SendMessageEvent (final String roomName,final UserName userName,final String message)
+	public SendMessageEvent (final String roomName,final String userName,final String message)
 	{
 		this.roomName = roomName;
 		this.userName = userName;
@@ -45,7 +44,7 @@ public class SendMessageEvent extends ServerHandleEvent implements Serializable
 	 * 
 	 * @return userName
 	 */
-	public UserName getUserName ()
+	public String getUserName ()
 	{
 		return userName;
 	}

@@ -9,13 +9,13 @@ import java.util.HashSet;
 public class UserData implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** userName */
-	private final UserName userName;
+	private final String userName;
 	/** 사용자의 패키지 메시지 세트 */
 	private final HashSet<MessageData> usersMessages;
 	/** 사용자가 활성 상태인지 여부를 나타내는 플래그 */
 	private final boolean isActive;
 
-	public UserData(final UserName userName, final HashSet<MessageData> userMessages, final boolean isActive) {
+	public UserData(final String userName, final HashSet<MessageData> userMessages, final boolean isActive) {
 		this.userName = userName;
 		this.usersMessages = userMessages;
 		this.isActive = isActive;
@@ -26,7 +26,7 @@ public class UserData implements Serializable {
 	 * 
 	 * @return userId ID
 	 */
-	public UserName getUserName() {
+	public String getUserName() {
 		return userName;
 	}
 
