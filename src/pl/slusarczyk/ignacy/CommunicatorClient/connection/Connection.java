@@ -14,7 +14,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.ClientHandledE
  * 
  * 서버와의 연결이 이루어지는 주 클라이언트 클래스 및 현재 연결에 대한 정보 저장
  */
-public class Client {
+public class Connection {
 	/** socket */
 	private Socket socket;
 	/** outputStream */
@@ -34,7 +34,7 @@ public class Client {
 	 * 
 	 * @param eventQueue
 	 */
-	public Client(final BlockingQueue<ServerHandledEvent> eventQueue, final String ipAdress, final int port, final View view) {
+	public Connection(final BlockingQueue<ServerHandledEvent> eventQueue, final String ipAdress, final int port, final View view) {
 
 		this.eventQueue = eventQueue;
 		this.view = view;

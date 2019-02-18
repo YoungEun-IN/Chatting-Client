@@ -21,7 +21,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /** 기본 채팅 창을 표시하는 클래스 **/
 
-class MainChatWindow {
+class MainChatView {
 	/** 메인 프레임 */
 	private JFrame frame;
 	/** 사용자 간의 대화가 표시되는 영역 */
@@ -46,7 +46,7 @@ class MainChatWindow {
 	private final String roomName;
 
 	/** 프레임 시작 및 표시 */
-	public MainChatWindow(final BlockingQueue<ServerHandledEvent> eventQueue, final UserIdData userIdData, final String roomName) {
+	public MainChatView(final BlockingQueue<ServerHandledEvent> eventQueue, final UserIdData userIdData, final String roomName) {
 		this.userIdData = userIdData;
 		this.roomName = roomName;
 		this.eventQueue = eventQueue;

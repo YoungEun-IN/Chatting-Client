@@ -3,7 +3,7 @@ package pl.slusarczyk.ignacy.CommunicatorClient;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import pl.slusarczyk.ignacy.CommunicatorClient.connection.Client;
+import pl.slusarczyk.ignacy.CommunicatorClient.connection.Connection;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.view.View;
 
@@ -21,7 +21,7 @@ public class CommunicatorClient
 	{
 		BlockingQueue<ServerHandledEvent> eventQueue = new LinkedBlockingQueue<ServerHandledEvent>();
 		View view = new View(eventQueue);
-		Client client = new Client(eventQueue,"localhost", 5000, view);
+		Connection client = new Connection(eventQueue,"localhost", 5000, view);
 		client.listenEventAndSend();
 	}
 }

@@ -15,15 +15,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.CreateNewRoomEvent;
-import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.JoinInExistingRoomEvent;
+import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.JoinExistingRoomEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandledEvent.ServerHandledEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.InfoServerEvent;
+import pl.slusarczyk.ignacy.CommunicatorServer.clientHandledEvent.AlertServerEvent;
 import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 
 /**
  * 방을 만들거나 연결하는 창을 담당하는 클래스
  **/
-class CreateJoinRoomWindow {
+class CreateOrJoinRoomView {
 	/** 적용 프레임 */
 	final JFrame frame;
 
@@ -38,7 +38,7 @@ class CreateJoinRoomWindow {
 	/** 새 이벤트가 추가 된 블로킹 큐 */
 	private final BlockingQueue<ServerHandledEvent> eventQueue;
 
-	public CreateJoinRoomWindow(final BlockingQueue<ServerHandledEvent> eventQueueObject) {
+	public CreateOrJoinRoomView(final BlockingQueue<ServerHandledEvent> eventQueueObject) {
 		this.eventQueue = eventQueueObject;
 
 		/** 기본 창 만들기 */
@@ -65,7 +65,7 @@ class CreateJoinRoomWindow {
 		submitButtonAndCreateRoom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventQueue.offer(new JoinInExistingRoomEvent(roomNameField.getText(), new UserIdData(userNameField.getText())));
+				eventQueue.offer(new JoinExistingRoomEvent(roomNameField.getText(), new UserIdData(userNameField.getText())));
 			}
 		});
 
@@ -106,7 +106,7 @@ class CreateJoinRoomWindow {
 	 * 
 	 * @param messageObject
 	 */
-	public void displayInfoMessage(final InfoServerEvent messageObject) {
+	public void displayMessage(final AlertServerEvent messageObject) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				JOptionPane.showMessageDialog(frame, messageObject.getMessage());
