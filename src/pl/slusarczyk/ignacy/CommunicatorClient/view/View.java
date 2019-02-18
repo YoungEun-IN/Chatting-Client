@@ -75,7 +75,7 @@ public class View {
 		@Override
 		void execute(ClientHandleEvent clientHandledObject) {
 			AfterConnectionServerEvent afterConnectionObject = (AfterConnectionServerEvent) clientHandledObject;
-			mainChatView = new MainChatView(eventQueue, afterConnectionObject.getUserIDData(), afterConnectionObject.getRoomName());
+			mainChatView = new MainChatView(eventQueue, afterConnectionObject.getUserName(), afterConnectionObject.getRoomName());
 			createOrJoinRoomView.closeCreateRoomWindow();
 			createOrJoinRoomView = null;
 		}
@@ -137,7 +137,7 @@ public class View {
 
 		for (UserData userData : userDataSet) {
 			for (MessageData messageData : userData.getUsersMessages()) {
-				messageData.setUserMessage(userData.getUserIdData().getUserName() + ":" + messageData.getMessage());
+				messageData.setUserMessage(userData.getUserName().getUserName() + ":" + messageData.getMessage());
 			}
 		}
 	}
@@ -199,7 +199,7 @@ public class View {
 		/** 모든 사용자를 거쳐 목록에 추가 된 사용자가 활성 상태인지 확인 */
 		for (UserData userData : conversationServerEvent.getRoom().getUserSet()) {
 			if (userData.isActive() == true) {
-				userListToSort.add(userData.getUserIdData().getUserName());
+				userListToSort.add(userData.getUserName().getUserName());
 			}
 		}
 

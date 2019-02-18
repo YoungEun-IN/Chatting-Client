@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 고객에게 보낸 사용자 이름을 래핑하는 클래스
  */
-public class UserIdData implements Serializable {
+public class UserName implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** userName */
@@ -16,7 +16,7 @@ public class UserIdData implements Serializable {
 	 * 
 	 * @param userName
 	 */
-	public UserIdData(final String userName) {
+	public UserName(final String userName) {
 		this.userName = userName;
 	}
 

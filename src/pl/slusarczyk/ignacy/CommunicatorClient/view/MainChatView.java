@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.QuitChattingEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.SendMessageEvent;
 import pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent.ServerHandleEvent;
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
+import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserName;
 
 /** 기본 채팅 창을 표시하는 클래스 **/
 
@@ -41,13 +41,13 @@ class MainChatView {
 	/** 새 이벤트가 추가 된 블로킹 큐 */
 	private final BlockingQueue<ServerHandleEvent> eventQueue;
 	/** 서버가 자신의 이벤트를 식별하는 데 도움을 준 사용자의 래핑 된 이름 */
-	private final UserIdData userIdData;
+	private final UserName userName;
 	/** 사용자가있는 방의 이름 */
 	private final String roomName;
 
 	/** 프레임 시작 및 표시 */
-	public MainChatView(final BlockingQueue<ServerHandleEvent> eventQueue, final UserIdData userIdData, final String roomName) {
-		this.userIdData = userIdData;
+	public MainChatView(final BlockingQueue<ServerHandleEvent> eventQueue, final UserName userName, final String roomName) {
+		this.userName = userName;
 		this.roomName = roomName;
 		this.eventQueue = eventQueue;
 		initialize();
@@ -68,7 +68,7 @@ class MainChatView {
 		WindowAdapter exitListener = new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				eventQueue.offer(new QuitChattingEvent(userIdData, roomName));
+				eventQueue.offer(new QuitChattingEvent(userName, roomName));
 				System.exit(0);
 			}
 		};
@@ -106,7 +106,7 @@ class MainChatView {
 		sendButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventQueue.offer(new SendMessageEvent(roomName, userIdData, userTextfield.getText()));
+				eventQueue.offer(new SendMessageEvent(roomName, userName, userTextfield.getText()));
 				userTextfield.setText("");
 			}
 		});

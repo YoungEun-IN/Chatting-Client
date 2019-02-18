@@ -1,7 +1,7 @@
 package pl.slusarczyk.ignacy.CommunicatorClient.serverHandleEvent;
 
 import java.io.Serializable;
-import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
+import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserName;
 
 /**
  * 채팅 종료 버튼을 누른 사용자의 이벤트를 설명하는 클래스입니다.
@@ -9,7 +9,7 @@ import pl.slusarczyk.ignacy.CommunicatorServer.model.data.UserIdData;
 public class QuitChattingEvent extends ServerHandleEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 채팅을 떠난 사용자의 이름 */
-	private final UserIdData userIdData;
+	private final UserName userName;
 	/** 사용자를 찾을 방의 이름 */
 	private final String roomName;
 
@@ -19,18 +19,18 @@ public class QuitChattingEvent extends ServerHandleEvent implements Serializable
 	 * @param userName
 	 * @param roomName
 	 */
-	public QuitChattingEvent(final UserIdData userIDData, final String roomName) {
-		this.userIdData = userIDData;
+	public QuitChattingEvent(final UserName userName, final String roomName) {
+		this.userName = userName;
 		this.roomName = roomName;
 	}
 
 	/**
 	 * 사용자의 이름을 반환
 	 *
-	 * @return userIdData
+	 * @return userName
 	 */
-	public UserIdData getUserIDData() {
-		return userIdData;
+	public UserName getUserName() {
+		return userName;
 	}
 
 	/**
