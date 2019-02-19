@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import chattingClient.connection.Connection;
-import chattingClient.serverHandleEvent.ServerHandleEvent;
+import chattingClient.clientEvent.ClientEvent;
 import chattingClient.view.ViewController;
 
 /**
@@ -19,7 +19,7 @@ public class CommunicatorClient
 	 */
 	public static void main(String args[])
 	{
-		BlockingQueue<ServerHandleEvent> eventQueue = new LinkedBlockingQueue<ServerHandleEvent>();
+		BlockingQueue<ClientEvent> eventQueue = new LinkedBlockingQueue<ClientEvent>();
 		ViewController view = new ViewController(eventQueue);
 		Connection client = new Connection(eventQueue,"localhost", 5000, view);
 		client.listenEventAndSend();

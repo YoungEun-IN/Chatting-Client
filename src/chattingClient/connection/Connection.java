@@ -6,9 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-import chattingClient.serverHandleEvent.ServerHandleEvent;
+import chattingClient.clientEvent.ClientEvent;
 import chattingClient.view.ViewController;
-import chattingServer.clientHandleEvent.ClientHandleEvent;
+import chattingServer.serverEvent.ServerEvent;
 
 /**
  * 
@@ -25,7 +25,7 @@ public class Connection {
 	/**
 	 * 클라이언트가 서버에서 대상으로 추가되는 블로킹 큐
 	 */
-	private final BlockingQueue<ServerHandleEvent> eventQueue;
+	private final BlockingQueue<ClientEvent> eventQueue;
 	/** viewController */
 	private final ViewController viewController;
 
@@ -34,7 +34,7 @@ public class Connection {
 	 * 
 	 * @param eventQueue
 	 */
-	public Connection(final BlockingQueue<ServerHandleEvent> eventQueue, final String ipAddress, final int port, final ViewController viewController) {
+	public Connection(final BlockingQueue<ClientEvent> eventQueue, final String ipAddress, final int port, final ViewController viewController) {
 
 		this.eventQueue = eventQueue;
 		this.viewController = viewController;
@@ -54,10 +54,10 @@ public class Connection {
 
 		while (true) {
 			try {
-				ServerHandleEvent serverHandleEvent = eventQueue.take();
+				ClientEvent clientEvent = eventQueue.take();
 
 				try {
-					outputStream.writeObject(serverHandleEvent);
+					outputStream.writeObject(clientEvent);
 				} catch (IOException ex) {
 					System.exit(1);
 				}
@@ -76,8 +76,8 @@ public class Connection {
 			System.out.println("서버에서 이벤트 수신이 시작되었습니다.");
 			while (true) {
 				try {
-					ClientHandleEvent serverEvent = (ClientHandleEvent) inputStream.readObject();
-					viewController.executeClientHandleEvent(serverEvent);
+					ServerEvent serverEvent = (ServerEvent) inputStream.readObject();
+					viewController.executeServerEvent(serverEvent);
 				} catch (IOException e) {
 					closeConnection();
 					System.exit(1);

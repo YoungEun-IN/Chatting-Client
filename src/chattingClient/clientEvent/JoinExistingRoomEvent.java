@@ -1,11 +1,11 @@
-package chattingClient.serverHandleEvent;
+package chattingClient.clientEvent;
 
 import java.io.Serializable;
 
 /**
  * 사용자가 방에 연결하기 위해 버튼을 누르는 이벤트를 설명하는 클래스
  */
-public class JoinExistingRoomEvent extends ServerHandleEvent implements Serializable {
+public class JoinExistingRoomEvent extends ClientEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** roomName */
 	private final String roomName;

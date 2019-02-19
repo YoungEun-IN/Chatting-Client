@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import chattingClient.serverHandleEvent.CreateNewRoomEvent;
-import chattingClient.serverHandleEvent.JoinExistingRoomEvent;
-import chattingClient.serverHandleEvent.ServerHandleEvent;
-import chattingServer.clientHandleEvent.AlertToClientEvent;
+import chattingClient.clientEvent.CreateNewRoomEvent;
+import chattingClient.clientEvent.JoinExistingRoomEvent;
+import chattingClient.clientEvent.ClientEvent;
+import chattingServer.serverEvent.AlertToClientEvent;
 
 /**
  * 방을 만들거나 연결하는 창을 담당하는 클래스
@@ -35,9 +35,9 @@ class CreateOrJoinRoomView {
 	/** 입력 된 정보를 확인하고 새 방에 참여하는 버튼 */
 	JButton submitButtonAndCreateRoom;
 	/** 새 이벤트가 추가 된 블로킹 큐 */
-	private final BlockingQueue<ServerHandleEvent> eventQueue;
+	private final BlockingQueue<ClientEvent> eventQueue;
 
-	public CreateOrJoinRoomView(final BlockingQueue<ServerHandleEvent> eventQueueObject) {
+	public CreateOrJoinRoomView(final BlockingQueue<ClientEvent> eventQueueObject) {
 		this.eventQueue = eventQueueObject;
 
 		/** 기본 창 만들기 */

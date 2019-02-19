@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import chattingClient.serverHandleEvent.ServerHandleEvent;
-import chattingServer.clientHandleEvent.AlertToClientEvent;
-import chattingServer.clientHandleEvent.ChatRoomViewBuildEvent;
-import chattingServer.clientHandleEvent.ClientHandleEvent;
-import chattingServer.clientHandleEvent.GiveChattingInfoEvent;
+import chattingClient.clientEvent.ClientEvent;
 import chattingServer.model.data.MessageData;
 import chattingServer.model.data.UserData;
+import chattingServer.serverEvent.AlertToClientEvent;
+import chattingServer.serverEvent.ChatRoomViewBuildEvent;
+import chattingServer.serverEvent.ConversationBuildEvent;
+import chattingServer.serverEvent.ServerEvent;
 
 /**
  * 창 표시 및 대화 수신을 담당
@@ -25,56 +25,56 @@ public class ViewController {
 	/** 기본 채팅 창 */
 	private ChatRoomView chatRoomView;
 	/** 컨트롤러가 처리 한 이벤트 이벤트를 던지는 블로킹 큐 */
-	private final BlockingQueue<ServerHandleEvent> eventQueue;
+	private final BlockingQueue<ClientEvent> eventQueue;
 
-	private final Map<Class<? extends ClientHandleEvent>, ClientHandledEventStrategy> strategyMap;
+	private final Map<Class<? extends ServerEvent>, ServerdEventStrategy> strategyMap;
 
 	/**
 	 * 지정된 파라미터에 근거하는 뷰를 작성하는 생성자
 	 * 
 	 * @param eventQueue
 	 */
-	public ViewController(BlockingQueue<ServerHandleEvent> eventQueue) {
+	public ViewController(BlockingQueue<ClientEvent> eventQueue) {
 		this.createOrJoinRoomView = new CreateOrJoinRoomView(eventQueue);
 		this.eventQueue = eventQueue;
 
 		/** 전략 맵 생성 및 할당 */
-		this.strategyMap = new HashMap<Class<? extends ClientHandleEvent>, ClientHandledEventStrategy>();
-		this.strategyMap.put(ChatRoomViewBuildEvent.class, new AfterConnectionStrategy());
-		this.strategyMap.put(GiveChattingInfoEvent.class, new ConversationServerEventStrategy());
+		this.strategyMap = new HashMap<Class<? extends ServerEvent>, ServerdEventStrategy>();
+		this.strategyMap.put(ChatRoomViewBuildEvent.class, new ChatRoomViewBuildStrategy());
+		this.strategyMap.put(ConversationBuildEvent.class, new ConversationServerEventStrategy());
 		this.strategyMap.put(AlertToClientEvent.class, new MessageServerEventStrategy());
 	}
 
 	/**
 	 * 상응하는 모형의 전략을 구현하는 책임을 지는 메소드
 	 * 
-	 * @param clientHandleEventObject
+	 * @param serverEventObject
 	 */
-	public void executeClientHandleEvent(ClientHandleEvent clientHandleEventObject) {
-		ClientHandledEventStrategy clientHandleEventStrategy = strategyMap.get(clientHandleEventObject.getClass());
-		clientHandleEventStrategy.execute(clientHandleEventObject);
+	public void executeServerEvent(ServerEvent serverEventObject) {
+		ServerdEventStrategy serverEventStrategy = strategyMap.get(serverEventObject.getClass());
+		serverEventStrategy.execute(serverEventObject);
 	}
 
 	/**
 	 * 이벤트를 처리하는 전략 클래스의 추상 기본 클래스
 	 */
-	abstract class ClientHandledEventStrategy {
+	abstract class ServerdEventStrategy {
 		/**
 		 * 주어진 이벤트의 서비스를 기술하는 추상 메소드.
 		 * 
-		 * @param ClientHandleEvent
+		 * @param ServerEvent
 		 */
-		abstract void execute(final ClientHandleEvent clientHandleEvent);
+		abstract void execute(final ServerEvent serverEvent);
 	}
 
 	/**
 	 * 방의 연결 또는 생성이 성공적으로 완료된 서버의 정보를 처리하는 전략을 설명하는 내부 클래스
 	 */
-	class AfterConnectionStrategy extends ClientHandledEventStrategy {
+	class ChatRoomViewBuildStrategy extends ServerdEventStrategy {
 
 		@Override
-		void execute(ClientHandleEvent clientHandledObject) {
-			ChatRoomViewBuildEvent chatRoomViewBuildEvent = (ChatRoomViewBuildEvent) clientHandledObject;
+		void execute(ServerEvent serverObject) {
+			ChatRoomViewBuildEvent chatRoomViewBuildEvent = (ChatRoomViewBuildEvent) serverObject;
 			chatRoomView = new ChatRoomView(eventQueue, chatRoomViewBuildEvent.getUserName(), chatRoomViewBuildEvent.getRoomName());
 			createOrJoinRoomView.closeCreateRoomWindow();
 			createOrJoinRoomView = null;
@@ -84,57 +84,46 @@ public class ViewController {
 	/**
 	 * 대화 수락 및 사용자 목록 처리 방법을 설명하는 내부 클래스
 	 */
-	class ConversationServerEventStrategy extends ClientHandledEventStrategy {
+	class ConversationServerEventStrategy extends ServerdEventStrategy {
 		@Override
-		void execute(ClientHandleEvent clientHandledObject) {
-			GiveChattingInfoEvent conversationObject = (GiveChattingInfoEvent) clientHandledObject;
+		void execute(ServerEvent serverObject) {
+			ConversationBuildEvent conversationObject = (ConversationBuildEvent) serverObject;
 			updateUserConversationAndList(conversationObject);
 		}
 	}
-
-	/**
-	 * 서버로부터 수신을 처리하여 표시 할 수있는 전략을 설명하는 내부 클래스
-	 */
-	class MessageServerEventStrategy extends ClientHandledEventStrategy {
-		@Override
-		void execute(ClientHandleEvent clientHandledObject) {
-			AlertToClientEvent messageObject = (AlertToClientEvent) clientHandledObject;
-			createOrJoinRoomView.displayMessage(messageObject);
-		}
-	}
-
+	
 	/**
 	 * 표시된 대화 및 활성 사용자를 업데이트하는 메소드
 	 * 
-	 * @param giveChattingInfoEvent
+	 * @param conversationBuildEvent
 	 */
-	private void updateUserConversationAndList(GiveChattingInfoEvent giveChattingInfoEvent) {
-		updateConversation(giveChattingInfoEvent);
-		updateUserList(giveChattingInfoEvent);
+	private void updateUserConversationAndList(ConversationBuildEvent conversationBuildEvent) {
+		updateConversation(conversationBuildEvent);
+		updateUserList(conversationBuildEvent);
 	}
-
+	
 	/**
 	 * 표시된 호출을 직접 업데이트하는 메소드
 	 * 
-	 * @param giveChattingInfoEvent
+	 * @param conversationBuildEvent
 	 */
-	private void updateConversation(GiveChattingInfoEvent giveChattingInfoEvent) {
-		addUserNameToMessage(giveChattingInfoEvent);
-		HashSet<MessageData> allMessages = gatherAllMessages(giveChattingInfoEvent);
+	private void updateConversation(ConversationBuildEvent conversationBuildEvent) {
+		addUserNameToMessage(conversationBuildEvent);
+		HashSet<MessageData> allMessages = gatherAllMessages(conversationBuildEvent);
 		ArrayList<MessageData> sortedMessages = sortAllMessages(allMessages);
 		String conversationToDisplay = convertConversationToString(sortedMessages);
-
+		
 		chatRoomView.updateConversation(conversationToDisplay);
 	}
-
+	
 	/**
 	 * 표시 한 후에 메시지를 식별 할 수 있도록 각 메시지에 사용자의 이름을 추가하는 메소드
 	 * 
-	 * @param giveChattingInfoEvent
+	 * @param conversationBuildEvent
 	 */
-	private void addUserNameToMessage(GiveChattingInfoEvent giveChattingInfoEvent) {
-		HashSet<UserData> userDataSet = giveChattingInfoEvent.getRoom().getUserSet();
-
+	private void addUserNameToMessage(ConversationBuildEvent conversationBuildEvent) {
+		HashSet<UserData> userDataSet = conversationBuildEvent.getRoom().getUserSet();
+		
 		for (UserData userData : userDataSet) {
 			for (MessageData messageData : userData.getUsersMessages()) {
 				messageData.setMessage(userData.getUserName() + ":" + messageData.getMessage());
@@ -143,15 +132,26 @@ public class ViewController {
 	}
 
 	/**
+	 * 서버로부터 수신을 처리하여 표시 할 수있는 전략을 설명하는 내부 클래스
+	 */
+	class MessageServerEventStrategy extends ServerdEventStrategy {
+		@Override
+		void execute(ServerEvent serverObject) {
+			AlertToClientEvent messageObject = (AlertToClientEvent) serverObject;
+			createOrJoinRoomView.displayMessage(messageObject);
+		}
+	}
+
+	/**
 	 * 방에있는 사용자의 모든 메시지를 모으는 메소드
 	 * 
-	 * @param giveChattingInfoEvent
+	 * @param conversationBuildEvent
 	 * @return conversation
 	 */
-	private HashSet<MessageData> gatherAllMessages(GiveChattingInfoEvent giveChattingInfoEvent) {
+	private HashSet<MessageData> gatherAllMessages(ConversationBuildEvent conversationBuildEvent) {
 		HashSet<MessageData> conversation = new HashSet<MessageData>();
 
-		for (UserData userData : giveChattingInfoEvent.getRoom().getUserSet()) {
+		for (UserData userData : conversationBuildEvent.getRoom().getUserSet()) {
 			conversation.addAll(userData.getUsersMessages());
 		}
 		return conversation;
@@ -191,7 +191,7 @@ public class ViewController {
 	 * 
 	 * @param giveChattingInfoEvent
 	 */
-	void updateUserList(GiveChattingInfoEvent giveChattingInfoEvent) {
+	void updateUserList(ConversationBuildEvent giveChattingInfoEvent) {
 		String usersListToDisplay = new String("");
 
 		List<String> userListToSort = new ArrayList<String>();

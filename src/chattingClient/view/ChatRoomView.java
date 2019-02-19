@@ -14,9 +14,9 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
-import chattingClient.serverHandleEvent.QuitChattingEvent;
-import chattingClient.serverHandleEvent.SendMessageEvent;
-import chattingClient.serverHandleEvent.ServerHandleEvent;
+import chattingClient.clientEvent.QuitChattingEvent;
+import chattingClient.clientEvent.SendMessageEvent;
+import chattingClient.clientEvent.ClientEvent;
 
 /** 기본 채팅 창을 표시하는 클래스 **/
 
@@ -38,14 +38,14 @@ class ChatRoomView {
 	private JScrollPane userTextMessageScroll;
 	private JScrollPane onlineUsersScroll;
 	/** 새 이벤트가 추가 된 블로킹 큐 */
-	private final BlockingQueue<ServerHandleEvent> eventQueue;
+	private final BlockingQueue<ClientEvent> eventQueue;
 	/** 서버가 자신의 이벤트를 식별하는 데 도움을 준 사용자의 래핑 된 이름 */
 	private final String userName;
 	/** 사용자가있는 방의 이름 */
 	private final String roomName;
 
 	/** 프레임 시작 및 표시 */
-	public ChatRoomView(final BlockingQueue<ServerHandleEvent> eventQueue, final String userName, final String roomName) {
+	public ChatRoomView(final BlockingQueue<ClientEvent> eventQueue, final String userName, final String roomName) {
 		this.userName = userName;
 		this.roomName = roomName;
 		this.eventQueue = eventQueue;
