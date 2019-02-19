@@ -35,7 +35,6 @@ public class Connection {
 	 * @param eventQueue
 	 */
 	public Connection(final BlockingQueue<ClientSideEvent> eventQueue, final String ipAddress, final int port, final ViewController viewController) {
-
 		this.eventQueue = eventQueue;
 		this.viewController = viewController;
 
@@ -43,8 +42,8 @@ public class Connection {
 			this.socket = new Socket(ipAddress, port);
 			this.inputStream = new ObjectInputStream(socket.getInputStream());
 			this.outputStream = new ObjectOutputStream(socket.getOutputStream());
-			ListenFromServer listenFromServer = new ListenFromServer();
-			listenFromServer.start();
+			ListenThread listenThread = new ListenThread();
+			listenThread.start();
 		} catch (IOException ex) {
 			System.err.println(ex);
 		}
@@ -53,9 +52,10 @@ public class Connection {
 	/**
 	 * 서버의 이벤트를 수신하는 내부 클래스
 	 */
-	private class ListenFromServer extends Thread {
+	private class ListenThread extends Thread {
 		public void run() {
 			System.out.println("서버에서 이벤트 수신이 시작되었습니다.");
+			
 			while (true) {
 				try {
 					ServerSideEvent serverSideEvent = (ServerSideEvent) inputStream.readObject();
