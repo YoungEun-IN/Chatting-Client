@@ -27,7 +27,7 @@ public class ViewController {
 	/** 컨트롤러가 처리 한 이벤트 이벤트를 던지는 블로킹 큐 */
 	private final BlockingQueue<ClientSideEvent> eventQueue;
 
-	private final Map<Class<? extends ServerSideEvent>, ServerdEventStrategy> strategyMap;
+	private final Map<Class<? extends ServerSideEvent>, ServerSideStrategy> strategyMap;
 
 	/**
 	 * 지정된 파라미터에 근거하는 뷰를 작성하는 생성자
@@ -39,26 +39,26 @@ public class ViewController {
 		this.eventQueue = eventQueue;
 
 		/** 전략 맵 생성 및 할당 */
-		this.strategyMap = new HashMap<Class<? extends ServerSideEvent>, ServerdEventStrategy>();
+		this.strategyMap = new HashMap<Class<? extends ServerSideEvent>, ServerSideStrategy>();
 		this.strategyMap.put(ChatRoomViewBuildEvent.class, new ChatRoomViewBuildStrategy());
-		this.strategyMap.put(ConversationBuildEvent.class, new ConversationServerSideEventStrategy());
-		this.strategyMap.put(AlertToClientEvent.class, new MessageServerSideEventStrategy());
+		this.strategyMap.put(ConversationBuildEvent.class, new ConversationBuildStrategy());
+		this.strategyMap.put(AlertToClientEvent.class, new AlertToClientEventStrategy());
 	}
 
 	/**
 	 * 상응하는 모형의 전략을 구현하는 책임을 지는 메소드
 	 * 
-	 * @param serverSideEventObject
+	 * @param serverSideEventt
 	 */
-	public void executeServerSideEvent(ServerSideEvent serverSideEventObject) {
-		ServerdEventStrategy serverSideEventStrategy = strategyMap.get(serverSideEventObject.getClass());
-		serverSideEventStrategy.execute(serverSideEventObject);
+	public void executeServerSideEvent(ServerSideEvent serverSideEventt) {
+		ServerSideStrategy serverSideEventStrategy = strategyMap.get(serverSideEventt.getClass());
+		serverSideEventStrategy.execute(serverSideEventt);
 	}
 
 	/**
 	 * 이벤트를 처리하는 전략 클래스의 추상 기본 클래스
 	 */
-	abstract class ServerdEventStrategy {
+	abstract class ServerSideStrategy {
 		/**
 		 * 주어진 이벤트의 서비스를 기술하는 추상 메소드.
 		 * 
@@ -70,7 +70,7 @@ public class ViewController {
 	/**
 	 * 방의 연결 또는 생성이 성공적으로 완료된 서버의 정보를 처리하는 전략을 설명하는 내부 클래스
 	 */
-	class ChatRoomViewBuildStrategy extends ServerdEventStrategy {
+	class ChatRoomViewBuildStrategy extends ServerSideStrategy {
 
 		@Override
 		void execute(ServerSideEvent serverObject) {
@@ -84,7 +84,7 @@ public class ViewController {
 	/**
 	 * 대화 수락 및 사용자 목록 처리 방법을 설명하는 내부 클래스
 	 */
-	class ConversationServerSideEventStrategy extends ServerdEventStrategy {
+	class ConversationBuildStrategy extends ServerSideStrategy {
 		@Override
 		void execute(ServerSideEvent serverObject) {
 			ConversationBuildEvent conversationObject = (ConversationBuildEvent) serverObject;
@@ -134,7 +134,7 @@ public class ViewController {
 	/**
 	 * 서버로부터 수신을 처리하여 표시 할 수있는 전략을 설명하는 내부 클래스
 	 */
-	class MessageServerSideEventStrategy extends ServerdEventStrategy {
+	class AlertToClientEventStrategy extends ServerSideStrategy {
 		@Override
 		void execute(ServerSideEvent serverObject) {
 			AlertToClientEvent messageObject = (AlertToClientEvent) serverObject;
