@@ -52,7 +52,7 @@ public class ViewController {
 	 */
 	public void executeClientHandleEvent(ClientHandleEvent clientHandleEventObject) {
 		ClientHandledEventStrategy clientHandleEventStrategy = strategyMap.get(clientHandleEventObject.getClass());
-		clientHandleEventStrategy.execute((ClientHandleEvent) clientHandleEventObject);
+		clientHandleEventStrategy.execute(clientHandleEventObject);
 	}
 
 	/**
