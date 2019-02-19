@@ -6,9 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-import chattingClient.clientEvent.ClientEvent;
+import chattingClient.clientSideEvent.ClientSideEvent;
 import chattingClient.view.ViewController;
-import chattingServer.serverEvent.ServerEvent;
+import chattingServer.serverSideEvent.ServerSideEvent;
 
 /**
  * 
@@ -25,7 +25,7 @@ public class Connection {
 	/**
 	 * 클라이언트가 서버에서 대상으로 추가되는 블로킹 큐
 	 */
-	private final BlockingQueue<ClientEvent> eventQueue;
+	private final BlockingQueue<ClientSideEvent> eventQueue;
 	/** viewController */
 	private final ViewController viewController;
 
@@ -34,7 +34,7 @@ public class Connection {
 	 * 
 	 * @param eventQueue
 	 */
-	public Connection(final BlockingQueue<ClientEvent> eventQueue, final String ipAddress, final int port, final ViewController viewController) {
+	public Connection(final BlockingQueue<ClientSideEvent> eventQueue, final String ipAddress, final int port, final ViewController viewController) {
 
 		this.eventQueue = eventQueue;
 		this.viewController = viewController;
@@ -50,34 +50,16 @@ public class Connection {
 		}
 	}
 
-	public void listenEventAndSend() {
-
-		while (true) {
-			try {
-				ClientEvent clientEvent = eventQueue.take();
-
-				try {
-					outputStream.writeObject(clientEvent);
-				} catch (IOException ex) {
-					System.exit(1);
-				}
-			} catch (InterruptedException ex) {
-				System.err.print(ex);
-			}
-
-		}
-	}
-
 	/**
 	 * 서버의 이벤트를 수신하는 내부 클래스
 	 */
-	public class ListenFromServer extends Thread {
+	private class ListenFromServer extends Thread {
 		public void run() {
 			System.out.println("서버에서 이벤트 수신이 시작되었습니다.");
 			while (true) {
 				try {
-					ServerEvent serverEvent = (ServerEvent) inputStream.readObject();
-					viewController.executeServerEvent(serverEvent);
+					ServerSideEvent serverSideEvent = (ServerSideEvent) inputStream.readObject();
+					viewController.executeServerSideEvent(serverSideEvent);
 				} catch (IOException e) {
 					closeConnection();
 					System.exit(1);
@@ -86,7 +68,7 @@ public class Connection {
 				}
 			}
 		}
-		
+
 		/**
 		 * 연결을 안전하게 닫는 메소드
 		 */
@@ -97,6 +79,28 @@ public class Connection {
 			} catch (IOException ex) {
 				System.err.println(ex);
 			}
+		}
+	}
+	
+	/**
+	 * 서버의 이벤트를 수신하고 응답하는 메소드
+	 */
+	public void listenAndSendEvent() {
+		
+		while (true) {
+			try {
+				ClientSideEvent clientSideEvent = eventQueue.take();
+				
+				try {
+					outputStream.writeObject(clientSideEvent);
+				} catch (IOException ex) {
+					System.err.println("IOException : " + ex);
+					System.exit(1);
+				}
+			} catch (InterruptedException ex) {
+				System.err.print("InterruptedException : " + ex);
+			}
+			
 		}
 	}
 }

@@ -1,11 +1,11 @@
-package chattingServer.serverEvent;
+package chattingServer.serverSideEvent;
 
 import java.io.Serializable;
 
 /**
  * 이 클래스는 사용자에게 정보를 보내는 데 사용됩니다.
  */
-public class AlertToClientEvent extends ServerEvent implements Serializable {
+public class AlertToClientEvent extends ServerSideEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 사용자에게 표시 될 메시지 */
 	private final String message;

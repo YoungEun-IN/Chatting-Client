@@ -1,11 +1,11 @@
-package chattingClient.clientEvent;
+package chattingClient.clientSideEvent;
 
 import java.io.Serializable;
 
 /**
  * 유저가 새로운 방을 작성하기 위해서 버튼을 누르는 이벤트를 나타내는 클래스
  */
-public class CreateNewRoomEvent extends ClientEvent implements Serializable {
+public class CreateNewRoomEvent extends ClientSideEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 방의 이름 */
 	private final String roomName;

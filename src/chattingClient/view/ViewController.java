@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import chattingClient.clientEvent.ClientEvent;
+import chattingClient.clientSideEvent.ClientSideEvent;
 import chattingServer.model.data.MessageData;
 import chattingServer.model.data.UserData;
-import chattingServer.serverEvent.AlertToClientEvent;
-import chattingServer.serverEvent.ChatRoomViewBuildEvent;
-import chattingServer.serverEvent.ConversationBuildEvent;
-import chattingServer.serverEvent.ServerEvent;
+import chattingServer.serverSideEvent.AlertToClientEvent;
+import chattingServer.serverSideEvent.ChatRoomViewBuildEvent;
+import chattingServer.serverSideEvent.ConversationBuildEvent;
+import chattingServer.serverSideEvent.ServerSideEvent;
 
 /**
  * 창 표시 및 대화 수신을 담당
@@ -25,34 +25,34 @@ public class ViewController {
 	/** 기본 채팅 창 */
 	private ChatRoomView chatRoomView;
 	/** 컨트롤러가 처리 한 이벤트 이벤트를 던지는 블로킹 큐 */
-	private final BlockingQueue<ClientEvent> eventQueue;
+	private final BlockingQueue<ClientSideEvent> eventQueue;
 
-	private final Map<Class<? extends ServerEvent>, ServerdEventStrategy> strategyMap;
+	private final Map<Class<? extends ServerSideEvent>, ServerdEventStrategy> strategyMap;
 
 	/**
 	 * 지정된 파라미터에 근거하는 뷰를 작성하는 생성자
 	 * 
 	 * @param eventQueue
 	 */
-	public ViewController(BlockingQueue<ClientEvent> eventQueue) {
+	public ViewController(BlockingQueue<ClientSideEvent> eventQueue) {
 		this.createOrJoinRoomView = new CreateOrJoinRoomView(eventQueue);
 		this.eventQueue = eventQueue;
 
 		/** 전략 맵 생성 및 할당 */
-		this.strategyMap = new HashMap<Class<? extends ServerEvent>, ServerdEventStrategy>();
+		this.strategyMap = new HashMap<Class<? extends ServerSideEvent>, ServerdEventStrategy>();
 		this.strategyMap.put(ChatRoomViewBuildEvent.class, new ChatRoomViewBuildStrategy());
-		this.strategyMap.put(ConversationBuildEvent.class, new ConversationServerEventStrategy());
-		this.strategyMap.put(AlertToClientEvent.class, new MessageServerEventStrategy());
+		this.strategyMap.put(ConversationBuildEvent.class, new ConversationServerSideEventStrategy());
+		this.strategyMap.put(AlertToClientEvent.class, new MessageServerSideEventStrategy());
 	}
 
 	/**
 	 * 상응하는 모형의 전략을 구현하는 책임을 지는 메소드
 	 * 
-	 * @param serverEventObject
+	 * @param serverSideEventObject
 	 */
-	public void executeServerEvent(ServerEvent serverEventObject) {
-		ServerdEventStrategy serverEventStrategy = strategyMap.get(serverEventObject.getClass());
-		serverEventStrategy.execute(serverEventObject);
+	public void executeServerSideEvent(ServerSideEvent serverSideEventObject) {
+		ServerdEventStrategy serverSideEventStrategy = strategyMap.get(serverSideEventObject.getClass());
+		serverSideEventStrategy.execute(serverSideEventObject);
 	}
 
 	/**
@@ -62,9 +62,9 @@ public class ViewController {
 		/**
 		 * 주어진 이벤트의 서비스를 기술하는 추상 메소드.
 		 * 
-		 * @param ServerEvent
+		 * @param ServerSideEvent
 		 */
-		abstract void execute(final ServerEvent serverEvent);
+		abstract void execute(final ServerSideEvent serverSideEvent);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ViewController {
 	class ChatRoomViewBuildStrategy extends ServerdEventStrategy {
 
 		@Override
-		void execute(ServerEvent serverObject) {
+		void execute(ServerSideEvent serverObject) {
 			ChatRoomViewBuildEvent chatRoomViewBuildEvent = (ChatRoomViewBuildEvent) serverObject;
 			chatRoomView = new ChatRoomView(eventQueue, chatRoomViewBuildEvent.getUserName(), chatRoomViewBuildEvent.getRoomName());
 			createOrJoinRoomView.closeCreateRoomWindow();
@@ -84,9 +84,9 @@ public class ViewController {
 	/**
 	 * 대화 수락 및 사용자 목록 처리 방법을 설명하는 내부 클래스
 	 */
-	class ConversationServerEventStrategy extends ServerdEventStrategy {
+	class ConversationServerSideEventStrategy extends ServerdEventStrategy {
 		@Override
-		void execute(ServerEvent serverObject) {
+		void execute(ServerSideEvent serverObject) {
 			ConversationBuildEvent conversationObject = (ConversationBuildEvent) serverObject;
 			updateUserConversationAndList(conversationObject);
 		}
@@ -134,9 +134,9 @@ public class ViewController {
 	/**
 	 * 서버로부터 수신을 처리하여 표시 할 수있는 전략을 설명하는 내부 클래스
 	 */
-	class MessageServerEventStrategy extends ServerdEventStrategy {
+	class MessageServerSideEventStrategy extends ServerdEventStrategy {
 		@Override
-		void execute(ServerEvent serverObject) {
+		void execute(ServerSideEvent serverObject) {
 			AlertToClientEvent messageObject = (AlertToClientEvent) serverObject;
 			createOrJoinRoomView.displayMessage(messageObject);
 		}
