@@ -3,7 +3,7 @@ package chattingServer.serverSideEvent;
 import java.io.Serializable;
 
 /**
- * 이 클래스는 사용자에게 정보를 보내는 데 사용됩니다.
+ * 사용자에게 알림을 줄 때 발생하는 이벤트
  */
 public class AlertToClientEvent extends ServerSideEvent implements Serializable {
 	private static final long serialVersionUID = 1L;

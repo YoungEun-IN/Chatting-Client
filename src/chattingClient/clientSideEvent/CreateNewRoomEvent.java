@@ -3,7 +3,7 @@ package chattingClient.clientSideEvent;
 import java.io.Serializable;
 
 /**
- * 유저가 새로운 방을 작성하기 위해서 버튼을 누르는 이벤트를 나타내는 클래스
+ * 새로 방을 생성할 때 발생하는 이벤트
  */
 public class CreateNewRoomEvent extends ClientSideEvent implements Serializable {
 	private static final long serialVersionUID = 1L;

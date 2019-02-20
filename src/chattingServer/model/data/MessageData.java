@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 메시지 집합을 포함하는 클래스
+ * 메시지 정보를 담고 있다.
  */
 public class MessageData implements Comparable<MessageData>, Serializable {
 	private static final long serialVersionUID = 1L;

@@ -20,7 +20,7 @@ import chattingClient.clientSideEvent.ClientSideEvent;
 import chattingServer.serverSideEvent.AlertToClientEvent;
 
 /**
- * 방을 만들거나 연결하는 창을 담당하는 클래스
+ * 프로그램 실행시 가장 먼저 보이는 화면을 그려준다.
  **/
 class CreateOrJoinRoomView {
 	/** 적용 프레임 */

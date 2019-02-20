@@ -3,7 +3,7 @@ package chattingClient.clientSideEvent;
 import java.io.Serializable;
 
 /**
- * 채팅 종료 버튼을 누른 사용자의 이벤트를 설명하는 클래스입니다.
+ * 사용자가 방을 나갔을 때 발생하는 이벤트
  */
 public class QuitChattingEvent extends ClientSideEvent implements Serializable {
 	private static final long serialVersionUID = 1L;

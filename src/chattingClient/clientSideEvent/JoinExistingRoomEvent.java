@@ -3,7 +3,7 @@ package chattingClient.clientSideEvent;
 import java.io.Serializable;
 
 /**
- * 사용자가 방에 연결하기 위해 버튼을 누르는 이벤트를 설명하는 클래스
+ * 이미 존재하는 방에 입장할때 발생하는 이벤트
  */
 public class JoinExistingRoomEvent extends ClientSideEvent implements Serializable {
 	private static final long serialVersionUID = 1L;

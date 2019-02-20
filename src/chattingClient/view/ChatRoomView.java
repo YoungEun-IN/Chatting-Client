@@ -18,7 +18,7 @@ import chattingClient.clientSideEvent.QuitChattingEvent;
 import chattingClient.clientSideEvent.SendMessageEvent;
 import chattingClient.clientSideEvent.ClientSideEvent;
 
-/** 기본 채팅 창을 표시하는 클래스 **/
+/** 대화창 화면을 그려준다. **/
 
 class ChatRoomView {
 	/** 메인 프레임 */

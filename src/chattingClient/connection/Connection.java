@@ -13,7 +13,7 @@ import chattingServer.serverSideEvent.ServerSideEvent;
 
 /**
  * 
- * 서버와의 연결이 이루어지는 주 클라이언트 클래스 및 현재 연결에 대한 정보 저장
+ * Socekt 을 열어 원격지 호스트와의 통로를 만든다. 객체를 교환하므로 ObjectIn(Out)putStream 을 열어준다.
  */
 public class Connection {
 	/** socket */
@@ -59,7 +59,7 @@ public class Connection {
 	 */
 	private class ListenThread extends Thread {
 		public void run() {
-			System.out.println("서버에서 이벤트 수신이 시작되었습니다.");
+			System.out.println("서버에서 클라이언트 이벤트 수신을 시작했습니다.");
 
 			while (true) {
 				try {

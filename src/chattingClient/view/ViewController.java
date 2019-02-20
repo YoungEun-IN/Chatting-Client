@@ -17,7 +17,7 @@ import chattingServer.serverSideEvent.ConversationBuildEvent;
 import chattingServer.serverSideEvent.ServerSideEvent;
 
 /**
- * 창 표시 및 대화 수신을 담당
+ * 서버의 동작을 해석하는 전략맵을 생성하고 분기한다.
  */
 public class ViewController {
 	/** 새 룸 가입 또는 생성을위한 선택 창 */

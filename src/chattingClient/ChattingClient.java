@@ -3,7 +3,7 @@ package chattingClient;
 import chattingClient.connection.Connection;
 
 /**
- * 모든 구성 요소의 적절한 초기화를 담당
+ * Connection 객체를 싱글톤으로 생성한다.
  */
 public class ChattingClient {
 	/**

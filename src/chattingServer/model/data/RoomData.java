@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 
 /**
- * 방 패키지 클래스
+ * 방 정보를 담고 있다.
  */
 public class RoomData implements Serializable
 {

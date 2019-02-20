@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 
 /**
- * 사용자 패키지 클래스
+ * 사용자 정보를 담고 있다.
  */
 public class UserData implements Serializable {
 	private static final long serialVersionUID = 1L;
