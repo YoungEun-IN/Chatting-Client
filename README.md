@@ -4,115 +4,107 @@
 <a href="#"><img src="https://img.shields.io/github/languages/top/1ilsang/java-mvc-chatting.svg?colorB=yellow&style=flat" /></a>
 <a href="#"><img src="https://img.shields.io/badge/license-MIT-green.svg" /></a>
 
-## ¾î¶² ÇÁ·ÎÁ§Æ®ÀÎ°¡¿ä?
-- ¸ÖÆ¼ Ã¤ÆÃ ÅäÀÌ ÇÁ·ÎÁ§Æ®.
-- ÇÙ½É ¸ñÇ¥: ´ÙÇü¼º, MVC, ¾²·¹µå, ¼ÒÄÏÀ» Â¤¾îº¸ÀÚ.
-- Á¦ÀÛ ±â°£: ¾à 10ÀÏ
+## ì–´ë–¤ í”„ë¡œì íŠ¸ì¸ê°€ìš”?
+- ë©€í‹° ì±„íŒ… í† ì´ í”„ë¡œì íŠ¸.
+- í•µì‹¬ ëª©í‘œ: ë‹¤í˜•ì„±, MVC, ì“°ë ˆë“œ, ì†Œì¼“ì„ ì§šì–´ë³´ìž.
+- ì œìž‘ ê¸°ê°„: ì•½ 10ì¼
 - Keyword: MVC, Thread, Socket, Polymorphism, Serializable, Swing, Singleton, Strategy Pattern
 
 
-## ±¸Çö ½Ã ÁßÁ¡ »çÇ×
-1. MVC ÆÐÅÏÀ» »ç¿ëÇÏ¿© Å¬·¡½º º° ±â´ÉÀÌ ¸íÈ®ÇÏµµ·Ï ¼³°èÇÑ´Ù.
-2. ÄÁÆ®·Ñ·¯ Å¬·¡½º´Â ½Ì±ÛÅæÀÌ µÇµµ·Ï ÇÏ¿© ºÒÇÊ¿äÇÑ °´Ã¼ »ý¼ºÀ» ¸·´Â´Ù.
-3. ¼­¹ö¿Í Å¬¶óÀÌ¾ðÆ® °£ Àü´ÞµÇ´Â °´Ã¼´Â Àü·« ÆÐÅÏÀ» »ç¿ëÇÏ¿© Ä¸½¶È­ÇÏ°í, BlockingQueue¸¦ È°¿ëÇÏ¿© ÀÌº¥Æ®°¡ ¼ø¼­´ë·Î ÀúÀåµÇµµ·Ï ÇÑ´Ù.
-4. final Å°¿öµå¿Í private Å°¿öµå¸¦ ÀûÀýÈ÷ »ç¿ëÇÏ¿© ¹ö±×ÀÇ °¡´É¼ºÀ» ÃÖ¼ÒÈ­ÇÑ´Ù.
-5. Åë½ÅÀº ¸ðµÎ Á÷·ÄÈ­µÈ °´Ã¼¸¦ »ç¿ëÇÑ´Ù.
+## êµ¬í˜„ ì‹œ ì¤‘ì  ì‚¬í•­
+1. MVC íŒ¨í„´ì„ ì‚¬ìš©í•˜ì—¬ í´ëž˜ìŠ¤ ë³„ ê¸°ëŠ¥ì´ ëª…í™•í•˜ë„ë¡ ì„¤ê³„í•œë‹¤.
+2. ì»¨íŠ¸ë¡¤ëŸ¬ í´ëž˜ìŠ¤ëŠ” ì‹±ê¸€í†¤ì´ ë˜ë„ë¡ í•˜ì—¬ ë¶ˆí•„ìš”í•œ ê°ì²´ ìƒì„±ì„ ë§‰ëŠ”ë‹¤.
+3. ì„œë²„ì™€ í´ë¼ì´ì–¸íŠ¸ ê°„ ì „ë‹¬ë˜ëŠ” ê°ì²´ëŠ” ì „ëžµ íŒ¨í„´ì„ ì‚¬ìš©í•˜ì—¬ ìº¡ìŠí™”í•˜ê³ , BlockingQueueë¥¼ í™œìš©í•˜ì—¬ ì´ë²¤íŠ¸ê°€ ìˆœì„œëŒ€ë¡œ ì €ìž¥ë˜ë„ë¡ í•œë‹¤.
+4. final í‚¤ì›Œë“œì™€ private í‚¤ì›Œë“œë¥¼ ì ì ˆížˆ ì‚¬ìš©í•˜ì—¬ ë²„ê·¸ì˜ ê°€ëŠ¥ì„±ì„ ìµœì†Œí™”í•œë‹¤.
+5. í†µì‹ ì€ ëª¨ë‘ ì§ë ¬í™”ëœ ê°ì²´ë¥¼ ì‚¬ìš©í•œë‹¤.
 
-## »ùÇÃ È­¸é
-##### ´ëÈ­¹æ Á¢¼Ó È­¸é
+## ìƒ˜í”Œ í™”ë©´
+##### ëŒ€í™”ë°© ì ‘ì† í™”ë©´
 
 <img src="img/welcome.png"  />
 
-##### Ã¤ÆÃÈ­¸é
+##### ì±„íŒ…í™”ë©´
 
 <img src="img/chatting.png" />
 
-##### ¼­¹ö ½ÇÇà ÄÜ¼Ö·Î±×
+##### ì„œë²„ ì‹¤í–‰ ì½˜ì†”ë¡œê·¸
 
 <img src="img/server.png" />
 
-##### Å¬¶óÀÌ¾ðÆ® ½ÇÇà ÄÜ¼Ö·Î±×
+##### í´ë¼ì´ì–¸íŠ¸ ì‹¤í–‰ ì½˜ì†”ë¡œê·¸
 
 <img src="img/client.png" />
 
 <br/>
 
-## ÇÑ´«¿¡ º¸´Â ÀüÃ¼ ±¸¼º
+## í•œëˆˆì— ë³´ëŠ” ì „ì²´ êµ¬ì„±
 
 <img src="img/welcome.png"  />
 
-<hr/>
-
-<br/>
-
 ##### Server:
-  - ¼­¹ö´Â ½ÇÇà°ú µ¿½Ã¿¡ `ServerSocketThread` ¸¦ ÆÄ»ý½ÃÅ°°í, `ServerSocketThread`´Â ´Ù½Ã Ã¤ÆÃ¹æº°·Î `ConnectionThread`¸¦ ÆÄ»ý½ÃÅ²´Ù.
-  - Å¬¶óÀÌ¾ðÆ® ¿äÃ»Àº ÀúÀå ¼ø¼­¸¦ ÁöÄÑÁÖ±â À§ÇØ `Blocking Queue`¿¡ ´ã¾Æ ¼øÂ÷ÀûÀ¸·Î ÀúÀåÇÑ´Ù.
-  - `ConnectionThread` °´Ã¼´Â Å¬¶óÀÌ¾ðÆ®ÀÇ ¼ÒÄÏÀ» ºÐ¼®ÇØ Ã¤ÆÃ¹æº°·Î °ü¸®ÇØ ÀûÀýÇÏ°Ô ¸Þ½ÃÁö¸¦ »Ñ·ÁÁØ´Ù.
-<br/>
+  - ì„œë²„ëŠ” ì‹¤í–‰ê³¼ ë™ì‹œì— `ServerSocketThread` ë¥¼ íŒŒìƒì‹œí‚¤ê³ , `ServerSocketThread`ëŠ” ë‹¤ì‹œ ì±„íŒ…ë°©ë³„ë¡œ `ConnectionThread`ë¥¼ íŒŒìƒì‹œí‚¨ë‹¤.
+  - í´ë¼ì´ì–¸íŠ¸ ìš”ì²­ì€ ì €ìž¥ ìˆœì„œë¥¼ ì§€ì¼œì£¼ê¸° ìœ„í•´ `Blocking Queue`ì— ë‹´ì•„ ìˆœì°¨ì ìœ¼ë¡œ ì €ìž¥í•œë‹¤.
+  - `ConnectionThread` ê°ì²´ëŠ” í´ë¼ì´ì–¸íŠ¸ì˜ ì†Œì¼“ì„ ë¶„ì„í•´ ì±„íŒ…ë°©ë³„ë¡œ ê´€ë¦¬í•´ ì ì ˆí•˜ê²Œ ë©”ì‹œì§€ë¥¼ ë¿Œë ¤ì¤€ë‹¤.
 
 
 ##### Client: 
-  - `Connection`¿¡¼­ ¼­¹ö¿Í Åë½ÅÇÏ´Â ¼ÒÄÏÀÌ ¿­¸°´Ù. Åë½ÅÀº ¸ðµÎ `Á÷·ÄÈ­`µÈ °´Ã¼¸¦ »ç¿ëÇÑ´Ù.
-  - ¼ÒÄÏÀº `ListenThread` ¾²·¹µå °´Ã¼·Î ÆÄ»ýÇØ ÁøÇàÇÑ´Ù.
-  - º¸¿©ÁÙ È­¸é°´Ã¼¸¦ Ã£¾Ò´Ù¸é  `View` °´Ã¼¸¦ ÅëÇØ À¯Àú¿¡°Ô È­¸éÀ» º¸¿©ÁØ´Ù.
-
-<br/>
+  - `Connection`ì—ì„œ ì„œë²„ì™€ í†µì‹ í•˜ëŠ” ì†Œì¼“ì´ ì—´ë¦°ë‹¤. í†µì‹ ì€ ëª¨ë‘ `ì§ë ¬í™”`ëœ ê°ì²´ë¥¼ ì‚¬ìš©í•œë‹¤.
+  - ì†Œì¼“ì€ `ListenThread` ì“°ë ˆë“œ ê°ì²´ë¡œ íŒŒìƒí•´ ì§„í–‰í•œë‹¤.
+  - ë³´ì—¬ì¤„ í™”ë©´ê°ì²´ë¥¼ ì°¾ì•˜ë‹¤ë©´  `View` ê°ì²´ë¥¼ í†µí•´ ìœ ì €ì—ê²Œ í™”ë©´ì„ ë³´ì—¬ì¤€ë‹¤.
 
 
-## Å¬·¡½º ´ÜÀ§·Î ¾Ë¾Æº¸±â
+## í´ëž˜ìŠ¤ ë‹¨ìœ„ë¡œ ì•Œì•„ë³´ê¸°
 #### Server
-- ChattingServer : main ¸Þ¼Òµå ¾È¿¡¼­ Controller °´Ã¼¸¦ ½Ì±ÛÅæÀ¸·Î »ý¼ºÇÑ´Ù.
+- ChattingServer : main ë©”ì†Œë“œ ì•ˆì—ì„œ Controller ê°ì²´ë¥¼ ì‹±ê¸€í†¤ìœ¼ë¡œ ìƒì„±í•œë‹¤.
 
 ##### Connection
-- ConnectionHandler : Ã¤ÆÃÀ» Ã³¸®ÇÒ ¾²·¹µåµéÀ» ½ÇÇàÇÑ´Ù.
-- ConnectionThread : Å¬¶óÀÌ¾ðÆ®ÀÇ ¼ÒÄÏÀ» ºÐ¼®ÇØ Ã¤ÆÃ¹æº°·Î °ü¸®ÇØ ÀûÀýÇÏ°Ô ¸Þ½ÃÁö¸¦ »Ñ·ÁÁØ´Ù. À¯Àú°¡ ¹æ¿¡ Á¢¼ÓÇÒ¶§¸¶´Ù ÀÌ ¾²·¹µå°¡ ÇÏ³ª¾¿ »ý±ä´Ù.
-- ServerSocketThread : Å¬¶óÀÌ¾ðÆ®ÀÇ ¿äÃ»¼ÒÄÏÀ» ¹Þ¾Æ °¢ ¼ÒÄÏ¸¶´Ù ConnectionThread¸¦ ÆÄ»ý½ÃÅ²´Ù.
+- ConnectionHandler : ì±„íŒ…ì„ ì²˜ë¦¬í•  ì“°ë ˆë“œë“¤ì„ ì‹¤í–‰í•œë‹¤.
+- ConnectionThread : í´ë¼ì´ì–¸íŠ¸ì˜ ì†Œì¼“ì„ ë¶„ì„í•´ ì±„íŒ…ë°©ë³„ë¡œ ê´€ë¦¬í•´ ì ì ˆí•˜ê²Œ ë©”ì‹œì§€ë¥¼ ë¿Œë ¤ì¤€ë‹¤. ìœ ì €ê°€ ë°©ì— ì ‘ì†í• ë•Œë§ˆë‹¤ ì´ ì“°ë ˆë“œê°€ í•˜ë‚˜ì”© ìƒê¸´ë‹¤.
+- ServerSocketThread : í´ë¼ì´ì–¸íŠ¸ì˜ ìš”ì²­ì†Œì¼“ì„ ë°›ì•„ ê° ì†Œì¼“ë§ˆë‹¤ ConnectionThreadë¥¼ íŒŒìƒì‹œí‚¨ë‹¤.
  
 ##### controller
-- Controller : Å¬¶óÀÌ¾ðÆ®ÀÇ µ¿ÀÛÀ» ÇØ¼®ÇÏ´Â Àü·«¸ÊÀ» »ý¼ºÇÏ°í ºÐ±âÇÑ´Ù.
-- StrategyProcessor : Å¬¶óÀÌ¾ðÆ®ÀÇ µ¿ÀÛÀ» ÇØ¼®ÇÏ¿© ½ÇÇàÇÑ´Ù.
+- Controller : í´ë¼ì´ì–¸íŠ¸ì˜ ë™ìž‘ì„ í•´ì„í•˜ëŠ” ì „ëžµë§µì„ ìƒì„±í•˜ê³  ë¶„ê¸°í•œë‹¤.
+- StrategyProcessor : í´ë¼ì´ì–¸íŠ¸ì˜ ë™ìž‘ì„ í•´ì„í•˜ì—¬ ì‹¤í–‰í•œë‹¤.
 
 ##### serverSideEvent
-- ServerSideEvent : ¼­¹ö ÀÌº¥Æ®ÀÇ Ãß»óÅ¬·¡½º
-- AlertToClientEvent : »ç¿ëÀÚ¿¡°Ô ¾Ë¸²À» ÁÙ ¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
-- ChatRoomViewBuildEvent : Ã¤ÆÃÃ¢À» ±¸¼ºÇÒ ¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
-- ConversationBuildEvent : ´ëÈ­¸¦ ±¸¼ºÇÒ ¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
-- 
+- ServerSideEvent : ì„œë²„ ì´ë²¤íŠ¸ì˜ ì¶”ìƒí´ëž˜ìŠ¤
+- AlertToClientEvent : ì‚¬ìš©ìžì—ê²Œ ì•Œë¦¼ì„ ì¤„ ë•Œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸
+- ChatRoomViewBuildEvent : ì±„íŒ…ì°½ì„ êµ¬ì„±í•  ë•Œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸
+- ConversationBuildEvent : ëŒ€í™”ë¥¼ êµ¬ì„±í•  ë•Œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸
 
 ##### model.data
-- MessageData : ¸Þ½ÃÁö Á¤º¸¸¦ ´ã°í ÀÖ´Ù.
-- RoomData : ¹æ Á¤º¸¸¦ ´ã°í ÀÖ´Ù.
-- UserData : »ç¿ëÀÚ Á¤º¸¸¦ ´ã°í ÀÖ´Ù.
+- MessageData : ë©”ì‹œì§€ ì •ë³´ë¥¼ ë‹´ê³  ìžˆë‹¤.
+- RoomData : ë°© ì •ë³´ë¥¼ ë‹´ê³  ìžˆë‹¤.
+- UserData : ì‚¬ìš©ìž ì •ë³´ë¥¼ ë‹´ê³  ìžˆë‹¤.
 
 #### Cient
-- chattingClient : Connection °´Ã¼¸¦ ½Ì±ÛÅæÀ¸·Î »ý¼ºÇÑ´Ù.
+- chattingClient : Connection ê°ì²´ë¥¼ ì‹±ê¸€í†¤ìœ¼ë¡œ ìƒì„±í•œë‹¤.
 
 ##### Connection
-- Connection : Socekt À» ¿­¾î ¿ø°ÝÁö È£½ºÆ®¿ÍÀÇ Åë·Î¸¦ ¸¸µç´Ù. °´Ã¼¸¦ ±³È¯ÇÏ¹Ç·Î ObjectIn(Out)putStream À» ¿­¾îÁØ´Ù.
+- Connection : Socekt ì„ ì—´ì–´ ì›ê²©ì§€ í˜¸ìŠ¤íŠ¸ì™€ì˜ í†µë¡œë¥¼ ë§Œë“ ë‹¤. ê°ì²´ë¥¼ êµí™˜í•˜ë¯€ë¡œ ObjectIn(Out)putStream ì„ ì—´ì–´ì¤€ë‹¤.
 
 ##### view
-- ViewController : ¼­¹öÀÇ µ¿ÀÛÀ» ÇØ¼®ÇÏ´Â Àü·«¸ÊÀ» »ý¼ºÇÏ°í ºÐ±âÇÑ´Ù.
-- ChatRoomView : ´ëÈ­Ã¢ È­¸éÀ» ±×·ÁÁØ´Ù.
-- CreateOrJoinRoomView : ÇÁ·Î±×·¥ ½ÇÇà½Ã °¡Àå ¸ÕÀú º¸ÀÌ´Â È­¸éÀ» ±×·ÁÁØ´Ù.
+- ViewController : ì„œë²„ì˜ ë™ìž‘ì„ í•´ì„í•˜ëŠ” ì „ëžµë§µì„ ìƒì„±í•˜ê³  ë¶„ê¸°í•œë‹¤.
+- ChatRoomView : ëŒ€í™”ì°½ í™”ë©´ì„ ê·¸ë ¤ì¤€ë‹¤.
+- CreateOrJoinRoomView : í”„ë¡œê·¸ëž¨ ì‹¤í–‰ì‹œ ê°€ìž¥ ë¨¼ì € ë³´ì´ëŠ” í™”ë©´ì„ ê·¸ë ¤ì¤€ë‹¤.
   
 ##### clientSideEvent 
-- clientSideEvent : Å¬¶óÀÌ¾ðÆ® ÀÌº¥Æ®ÀÇ Ãß»óÅ¬·¡½º
-- CreateNewRoomEvent : »õ·Î ¹æÀ» »ý¼ºÇÒ ¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
-- JoinExistingRoomEvent : ÀÌ¹Ì Á¸ÀçÇÏ´Â ¹æ¿¡ ÀÔÀåÇÒ¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
-- QuitChattingEvent : »ç¿ëÀÚ°¡ ¹æÀ» ³ª°¬À» ¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
-- SendMessageEvent : »ç¿ëÀÚ°¡ ¸Þ½ÃÁö¸¦ ÀÔ·ÂÇÏ°í Àü¼ÛÇÒ ¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
+- clientSideEvent : í´ë¼ì´ì–¸íŠ¸ ì´ë²¤íŠ¸ì˜ ì¶”ìƒí´ëž˜ìŠ¤
+- CreateNewRoomEvent : ìƒˆë¡œ ë°©ì„ ìƒì„±í•  ë•Œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸
+- JoinExistingRoomEvent : ì´ë¯¸ ì¡´ìž¬í•˜ëŠ” ë°©ì— ìž…ìž¥í• ë•Œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸
+- QuitChattingEvent : ì‚¬ìš©ìžê°€ ë°©ì„ ë‚˜ê°”ì„ ë•Œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸
+- SendMessageEvent : ì‚¬ìš©ìžê°€ ë©”ì‹œì§€ë¥¼ ìž…ë ¥í•˜ê³  ì „ì†¡í•  ë•Œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸
 
-### ¾î¶»°Ô ½ÇÇàÇÏ³ª¿ä?
-##### 1. ¿øÇÏ´Â µð·ºÅä¸® À§Ä¡¿¡¼­ ¾Æ·¡ µÎ ¸í·É¾î ½ÇÇà
+### ì–´ë–»ê²Œ ì‹¤í–‰í•˜ë‚˜ìš”?
+##### 1. ì›í•˜ëŠ” ë””ë ‰í† ë¦¬ ìœ„ì¹˜ì—ì„œ ì•„ëž˜ ë‘ ëª…ë ¹ì–´ ì‹¤í–‰
 ```
 $ git clone https://github.com/YoungEun-IN/CommunicatorServer
 ```
 ```
 $ git clone https://github.com/YoungEun-IN/CommunicatorServer
 ```
-##### 2. cmd Ã¢¿¡¼­ ÇÁ·ÎÁ§Æ® À§Ä¡·Î ÀÌµ¿
-##### 3. ¾Æ·¡ ¸í·É¾î ¼øÂ÷ÀûÀ¸·Î ½ÇÇà
+##### 2. cmd ì°½ì—ì„œ í”„ë¡œì íŠ¸ ìœ„ì¹˜ë¡œ ì´ë™
+##### 3. ì•„ëž˜ ëª…ë ¹ì–´ ìˆœì°¨ì ìœ¼ë¡œ ì‹¤í–‰
 ```
 $ java /bin/ChattingServer/ChattingServer
 
@@ -121,19 +113,19 @@ $ java /bin/ChattingServer/ChattingServer
 $ java /bin/ChattingCient/ChattingCient
 
 ```
-- Âü°í : Ã¤ÆÃ ÇÁ·Î±×·¥Àº 5000 Æ÷Æ®¸¦ »ç¿ëÇÕ´Ï´Ù.
+- ì°¸ê³  : ì±„íŒ… í”„ë¡œê·¸ëž¨ì€ 5000 í¬íŠ¸ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.
 
-### ¸ÎÀ¸¸ç
-- ÄÚµùµµ ¾î·ÆÁö¸¸ ¹®¼­È­°¡ ´õ ¾î·Á¿ü´Ù.
-- ÃÊ¹Ý ¼³°è°¡ Á¤¸» ¾î·Á¿ü´Ù. °üÁ¡ ºÐ¸®°¡ Æ¯È÷ ¾î·Á¿ü´Ù.
+### ë§ºìœ¼ë©°
+- ì½”ë”©ë„ ì–´ë µì§€ë§Œ ë¬¸ì„œí™”ê°€ ë” ì–´ë ¤ì› ë‹¤.
+- ì´ˆë°˜ ì„¤ê³„ê°€ ì •ë§ ì–´ë ¤ì› ë‹¤. ê´€ì  ë¶„ë¦¬ê°€ íŠ¹ížˆ ì–´ë ¤ì› ë‹¤.
 
 ##### TODOLIST
-  - [ ] MSA È¯°æÀ¸·Î ¾÷±×·¹ÀÌµå
-  - [ ] ·Î±×ÀÎ ±â´É Ãß°¡
-  - [ ] ÆÄÀÏ log¾Ö ÀúÀåÇÏ´Â ±â´É Ãß°¡
-  - [ ] Ã¤ÆÃ¹æ µ¿Àû »ý¼º
-  - [ ] ¸ðµç »ó¼ö ÇÊµå ¿ÜºÎÆÄÀÏ·Î »©°Å³ª Å¬·¡½ºÈ­
-- Ãë¾÷ÇÏ°í½Í´Ù.
+  - [ ] MSA í™˜ê²½ìœ¼ë¡œ ì—…ê·¸ë ˆì´ë“œ
+  - [ ] ë¡œê·¸ì¸ ê¸°ëŠ¥ ì¶”ê°€
+  - [ ] íŒŒì¼ logì•  ì €ìž¥í•˜ëŠ” ê¸°ëŠ¥ ì¶”ê°€
+  - [ ] ì±„íŒ…ë°© ë™ì  ìƒì„±
+  - [ ] ëª¨ë“  ìƒìˆ˜ í•„ë“œ ì™¸ë¶€íŒŒì¼ë¡œ ë¹¼ê±°ë‚˜ í´ëž˜ìŠ¤í™”
+- ì·¨ì—…í•˜ê³ ì‹¶ë‹¤.
 
 ### License
 This is released under the MIT license. See [LICENSE](LICENSE) for details.
